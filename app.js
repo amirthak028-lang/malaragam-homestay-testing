@@ -407,7 +407,7 @@ form.addEventListener('submit', async e=>{
   el.msg.className='inline-msg err'; el.msg.textContent='';
   setBusy(true);
   try{
-    await startPayment();
+    const verification = await startPayment();  if (verification.status !== 'confirmed') {   el.msg.className = 'inline-msg err';    if (verification.status === 'expired') {     el.msg.textContent = 'Payment received, but your booking hold expired. Please contact us.';   } else {     el.msg.textContent = 'Payment received. Your booking requires manual review. Please contact us.';   }    return; }
     clearInterval(holdTimer);
     const q = quote();
     el.hold.hidden = true; el.summary.hidden = true; el.done.hidden = false;
