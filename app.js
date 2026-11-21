@@ -178,7 +178,7 @@ if(pm){
     $('#pmPhotos').href = 'https://www.google.com/search?tbm=isch&q='+enc(q);
     // Your own photo shows automatically if you add assets/places/<name>.jpg
     const ph = $('#pmPhoto'); ph.hidden = true; ph.removeAttribute('src'); ph.alt = $('#pmTitle').textContent;
-    const probe = new Image(); const path = 'assets/places/'+slug+'.jpg';
+        const probe = new Image(); const path = 'assets/places/'+slug+'.jpg';
     probe.onload = ()=>{ if(!pm.hidden && pmOpener===btn){ ph.src = path; ph.hidden = false; } };
     probe.src = path;
     pm.hidden = false; document.body.style.overflow = 'hidden'; $('.pm-close',pm).focus();
@@ -344,8 +344,7 @@ function startHold(expiresAt){
   tick(); holdTimer = setInterval(tick,1000);
 }
 function setBusy(b){ el.pay.disabled=b; if(b) el.payLabel.textContent=t('working'); else updatePayLabel(); }
-
-async function startPayment(){
+  async function startPayment(){
   const q = quote();
   if(!booking){
     // Match the existing create-booking Edge Function request contract.
@@ -407,7 +406,24 @@ form.addEventListener('submit', async e=>{
   el.msg.className='inline-msg err'; el.msg.textContent='';
   setBusy(true);
   try{
-    const verification = await startPayment();  if (verification.status !== 'confirmed') {   el.msg.className = 'inline-msg err';    if (verification.status === 'expired') {     el.msg.textContent = 'Payment received, but your booking hold expired. Please contact us.';   } else {     el.msg.textContent = 'Payment received. Your booking requires manual review. Please contact us.';   }    return; }
+    const verification = await startPayment();
+
+    if (verification.status !== 'confirmed') {
+      el.msg.className = 'inline-msg err';
+
+      if (verification.status === 'expired') {
+        el.msg.textContent =
+          'Payment received, but your booking hold expired. Please contact us.';
+      } else if (verification.status === 'manual_review') {
+        el.msg.textContent =
+          'Payment received. Your booking requires manual review. Please contact us.';
+      } else {
+        el.msg.textContent =
+          'Payment status could not be confirmed. Please contact support.';
+      }
+
+      return;
+    }
     clearInterval(holdTimer);
     const q = quote();
     el.hold.hidden = true; el.summary.hidden = true; el.done.hidden = false;
