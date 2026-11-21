@@ -5,7 +5,7 @@
 window.MALARAGAM_CONFIG = {
   // Keep false until Supabase and the three Edge Functions are connected and tested.
   // While false, the booking form works as a WhatsApp enquiry and nothing is charged.
-  ONLINE_BOOKING: false,
+  ONLINE_BOOKING: true,
 
   SUPABASE_URL: "https://kpbwndpgodcqcgudmike.supabase.co",
   SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwYnduZHBnb2RjcWNndWRtaWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0OTk3MDQsImV4cCI6MjExMDA3NTcwNH0.RvPzNgJk5lml4zifKzn24Xogu_5PBM_B-zpqZcN6taM",
