@@ -1,3 +1,4 @@
+
 (function(){
 'use strict';
 const CFG = window.MALARAGAM_CONFIG;
@@ -178,7 +179,7 @@ if(pm){
     $('#pmPhotos').href = 'https://www.google.com/search?tbm=isch&q='+enc(q);
     // Your own photo shows automatically if you add assets/places/<name>.jpg
     const ph = $('#pmPhoto'); ph.hidden = true; ph.removeAttribute('src'); ph.alt = $('#pmTitle').textContent;
-        const probe = new Image(); const path = 'assets/places/'+slug+'.jpg';
+    const probe = new Image(); const path = 'assets/places/'+slug+'.jpg';
     probe.onload = ()=>{ if(!pm.hidden && pmOpener===btn){ ph.src = path; ph.hidden = false; } };
     probe.src = path;
     pm.hidden = false; document.body.style.overflow = 'hidden'; $('.pm-close',pm).focus();
@@ -201,8 +202,7 @@ if(pm){
 
 /* ---------- booking ---------- */
 const form = $('#bookingForm');
-if(!form){ applyLang(); initCreativeMotion();
-initProgress(); return; }
+if(!form){ applyLang(); initCreativeMotion(); initProgress(); return; }
 
 const el = {
   inD:$('#checkIn'), outD:$('#checkOut'), adults:$('#adults'), children:$('#children'), beds:$('#beds'),
@@ -344,7 +344,8 @@ function startHold(expiresAt){
   tick(); holdTimer = setInterval(tick,1000);
 }
 function setBusy(b){ el.pay.disabled=b; if(b) el.payLabel.textContent=t('working'); else updatePayLabel(); }
-  async function startPayment(){
+
+async function startPayment(){
   const q = quote();
   if(!booking){
     // Match the existing create-booking Edge Function request contract.
@@ -370,27 +371,78 @@ function setBusy(b){ el.pay.disabled=b; if(b) el.payLabel.textContent=t('working
     if(!booking.id) throw new Error('Booking was created but its ID was not returned. Please contact support before retrying.');
     startHold(booking.expires);
   }
+
   const o = await api('create-razorpay-order',{booking_id:booking.id});
   await loadRazorpay();
   const order = { id:o.order_id ?? o.id, amount:o.amount, currency:o.currency||'INR', key:o.key_id ?? o.key ?? CFG.RAZORPAY_KEY_ID };
-  return new Promise((resolve,reject)=>{
+
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let verificationStarted = false;
+
+    const finishResolve = value => {
+      if (settled) return;
+      settled = true;
+      resolve(value);
+    };
+
+    const finishReject = error => {
+      if (settled) return;
+      settled = true;
+      reject(error);
+    };
+
     const rzp = new window.Razorpay({
-      key:order.key, amount:order.amount, currency:order.currency, order_id:order.id,
-      name:'Malaragam Homestay', description:'50% advance '+(booking.ref?('· '+booking.ref):''),
-      prefill:{name:el.name.value.trim(), email:el.email.value.trim(), contact:el.phone.value.trim()},
-      theme:{color:'#6e1130'},
-      handler: async resp=>{
-        try{
-          const v = await api('verify-razorpay-payment',{
-            booking_id:booking.id, razorpay_order_id:resp.razorpay_order_id,
-            razorpay_payment_id:resp.razorpay_payment_id, razorpay_signature:resp.razorpay_signature
-          });
-          resolve(v);
-        }catch(err){ err.verify=true; reject(err); }
+      key: order.key,
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.id,
+      name: 'Malaragam Homestay',
+      description: '50% advance ' + (booking.ref ? ('· ' + booking.ref) : ''),
+      prefill: {
+        name: el.name.value.trim(),
+        email: el.email.value.trim(),
+        contact: el.phone.value.trim()
       },
-      modal:{ondismiss:()=>reject(Object.assign(new Error('dismissed'),{dismissed:true}))}
+      theme: { color: '#6e1130' },
+
+      handler: async resp => {
+        verificationStarted = true;
+
+        try {
+          const v = await api('verify-razorpay-payment', {
+            booking_id: booking.id,
+            razorpay_order_id: resp.razorpay_order_id,
+            razorpay_payment_id: resp.razorpay_payment_id,
+            razorpay_signature: resp.razorpay_signature
+          });
+
+          finishResolve(v);
+        } catch (err) {
+          err.verify = true;
+          finishReject(err);
+        }
+      },
+
+      modal: {
+        ondismiss: () => {
+          if (!verificationStarted) {
+            finishReject(
+              Object.assign(new Error('dismissed'), { dismissed: true })
+            );
+          }
+        }
+      }
     });
-    rzp.on('payment.failed',()=>reject(Object.assign(new Error('failed'),{failed:true})));
+
+    rzp.on('payment.failed', () => {
+      if (!verificationStarted) {
+        finishReject(
+          Object.assign(new Error('failed'), { failed: true })
+        );
+      }
+    });
+
     rzp.open();
   });
 }
@@ -424,6 +476,7 @@ form.addEventListener('submit', async e=>{
 
       return;
     }
+
     clearInterval(holdTimer);
     const q = quote();
     el.hold.hidden = true; el.summary.hidden = true; el.done.hidden = false;
@@ -464,7 +517,7 @@ if($('#estimator')){
   $$('input[name=estPkg]').forEach(x=>x.addEventListener('change',renderEst));
   $('#estBeds').addEventListener('change',renderEst);
   $('#eBook').addEventListener('click',()=>{
-    const q = estQuote();
+    const q = estQuote(); 
     form.elements.package.value = q.pk; el.beds.value = String(q.beds);
     el.outD.min = el.inD.value ? addDays(el.inD.value,1) : '';
     if(el.inD.value){ el.outD.value = addDays(el.inD.value,estN); }
@@ -479,8 +532,6 @@ loadAvailability().then(checkDates);
 applyLang();
 refresh();
 })();
-
-
 
 
 // Pendant-lamp warmth follows the pointer across the gallery only.
