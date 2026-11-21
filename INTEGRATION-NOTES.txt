@@ -1,0 +1,23 @@
+MALARAGAM WEBSITE - SAFE FRONTEND INTEGRATION PATCH
+
+Changes made in this package:
+1. Booking form payload now uses the exact request field names expected by the existing create-booking Edge Function:
+   full_name, mobile, email, package_type, special_requests, check_in, check_out, adults, children.
+2. Booking response parsing now reads the nested `booking` object returned by the existing Edge Function.
+3. Payment-hold expiry parsing now recognizes the existing database column `payment_hold_expires_at`.
+4. JavaScript syntax check passed with Node.js.
+
+Not changed:
+- Existing Supabase database or Edge Functions.
+- Razorpay verification function (not safe to deploy until the payment-confirmation transaction is implemented and tested).
+- config.js credentials/placeholders and ONLINE_BOOKING=false.
+- Existing live website or custom domain.
+
+IMPORTANT BEFORE TESTING:
+- `config.js` still has placeholder Supabase URL and anon key, and ONLINE_BOOKING remains false. Do not enable online booking yet.
+- Existing create_booking_request calculates extra beds as GREATEST(adults + children - 4, 0). The browser's extra-bed selector is not sent to the existing Edge Function/database function. Confirm this business rule is intended before enabling online booking.
+- Existing booking function returns the inserted booking row inside `{ success, message, booking }`; the frontend now parses that structure.
+- Before production, remove public diagnostic database details from create-booking and tighten CORS / abuse protection as appropriate.
+- Payment verification must validate the Razorpay signature, fetch the payment from Razorpay and confirm it is captured with the expected amount/currency, then update payment and booking atomically using a database transaction/RPC. Do not deploy the ZIP's original verification function as-is.
+
+The original uploaded ZIP is not overwritten. This is a separate patched copy for review/testing.

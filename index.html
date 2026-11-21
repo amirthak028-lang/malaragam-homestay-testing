@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6e1130">
+  <meta name="description" content="Malaragam Homestay in Mayiladuthurai. Book the whole home: two AC bedrooms, hall and kitchen, close to the Cauvery-delta temples.">
+  <title>Malaragam Homestay | Mayiladuthurai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Hind+Madurai:wght@400;500;600&family=Mukta+Malar:wght@500;600;700&family=Noto+Serif+Tamil:wght@500;700&family=Young+Serif&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <noscript><style>.door{display:none}</style></noscript>
+</head>
+<body>
+<div class="welcome-box" id="welcomeBox" role="dialog" aria-modal="true" aria-label="Malaragam Homestay">
+  <div class="welcome-kolam" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+  <div class="welcome-word-wrap" aria-hidden="true">
+    <span class="welcome-word">MALARAGAM</span>
+    <span class="welcome-homestay">Homestay</span>
+    <span class="welcome-word-glint"></span>
+    <span class="welcome-spark welcome-spark-one"></span>
+    <span class="welcome-spark welcome-spark-two"></span>
+    <span class="welcome-spark welcome-spark-three"></span>
+  </div>
+  <button class="welcome-skip" id="welcomeSkip" type="button">Skip intro</button>
+</div>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="index.html#top" aria-label="Malaragam home"><span class="brand-mark" aria-hidden="true">ம</span><span class="brand-name">Malaragam</span></a>
+  <nav class="nav" id="nav" aria-label="Main">
+    <a href="#about" data-i18n="n_about">About</a>
+    <a href="#rooms" data-i18n="n_stay">Home</a>
+    <a href="#tariff" data-i18n="n_tariff">Accommodation Pricing</a>
+    <a href="#gallery" data-i18n="n_gallery">Gallery</a>
+    <a href="#nearby" data-i18n="n_nearby">Nearby</a>
+    <a href="reviews.html" data-i18n="n_reviews">Reviews</a>
+    <a href="#contact" data-i18n="n_contact">Contact</a>
+  </nav>
+  <div class="header-tools">
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language to Tamil">தமிழ்</button>
+    <a class="btn btn-gold btn-sm" href="#booking" data-i18n="n_book">Book your stay</a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="hero-place"><span>Saratha Nagar, Mayiladuthurai</span></p>
+    <h1 data-i18n="h_title">Where tradition meets comfort.</h1>
+    <p class="hero-lead" data-i18n="h_lead">A whole home in Mayiladuthurai for family stays and temple visits. Two air-conditioned bedrooms, a hall and a kitchen, all yours for the length of your stay.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="#booking" data-i18n="h_cta1">Check dates and book</a>
+      <a class="btn btn-line" href="#gallery" data-i18n="h_cta2">See the home</a>
+    </div>
+    <ul class="hero-facts">
+      <li data-i18n="f1">2 AC bedrooms</li>
+      <li data-i18n="f2">Up to 6 guests</li>
+      <li data-i18n="f3">The whole home, only yours</li>
+    </ul>
+  </div>
+
+  <div class="hero-stage-wrap">
+    <div class="door-stage" id="doorStage" style="--door-ratio:680/980">
+      <img class="stage-frame" src="assets/door.jpg" alt="Carved wooden entrance door of Malaragam">
+      <div class="stage-room"><img class="stage-hall" src="assets/photo-08.jpg" alt="The living hall seen through the open door"></div>
+      <div class="door door-l"><img src="assets/door.jpg" alt=""></div>
+      <div class="door door-r"><img src="assets/door.jpg" alt=""></div>
+    </div>
+    <button class="door-toggle" id="doorToggle" type="button" aria-pressed="false">Close the door</button>
+  </div>
+</section>
+
+<div class="border-band" aria-hidden="true"></div>
+
+<section class="section about" id="about">
+  <div class="about-head">
+    <h2 data-i18n="a_title">A Tamil home, made easy to stay in.</h2>
+  </div>
+  <div class="about-body">
+    <p data-i18n="a_p1">Malaragam is a whole homestay on Town Station Road in Mayiladuthurai. You book the entire house: two air-conditioned bedrooms, two bathrooms, a hall and a kitchen.</p>
+    <p data-i18n="a_p2">A carved wooden door at the entrance, warm pendant lights inside, and a quiet street to come back to after a day at the temples.</p>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section rooms" id="rooms">
+  <div class="section-head">
+    <h2 data-i18n="r_title">The home, room by room</h2>
+    <p data-i18n="r_lead">Everything below is included in your booking, with no other guests in the house.</p>
+  </div>
+  <div class="room-grid">
+    <figure class="room room-wide"><img src="assets/photo-06.jpg" alt="Air-conditioned bedroom with white bedding and maroon cushions" loading="lazy"><figcaption><h3 data-i18n="r1t">Two AC bedrooms</h3><p data-i18n="r1p">Wooden-framed beds with white linen and maroon accents, each with its own air conditioner.</p></figcaption></figure>
+    <figure class="room"><img src="assets/photo-08.jpg" alt="Living hall with ceiling fan and television unit" loading="lazy"><figcaption><h3 data-i18n="r2t">A hall for everyone</h3><p data-i18n="r2p">Space to sit together, with a television.</p></figcaption></figure>
+    <figure class="room"><img src="assets/photo-02.jpg" alt="Bathroom with brown textured tiles and shower" loading="lazy"><figcaption><h3 data-i18n="r3t">Two bathrooms</h3><p data-i18n="r3p">Hot water, clean fittings and no queue.</p></figcaption></figure>
+    <figure class="room"><img src="assets/photo-01.jpg" alt="Kitchen with blue cabinets, steel sink and window" loading="lazy"><figcaption><h3 data-i18n="r4t">A kitchen, if you need it</h3><p data-i18n="r4p">Choose the kitchen-access package to cook. Basic utensils are provided.</p></figcaption></figure>
+  </div>
+
+  <div class="amenities">
+    <h3 data-i18n="am_title">What you will find</h3>
+    <ul>
+      <li data-i18n="am1">Wi-Fi</li>
+      <li data-i18n="am2">Hot water</li>
+      <li data-i18n="am3">Television</li>
+      <li data-i18n="am4">Refrigerator</li>
+      <li data-i18n="am5">Parking at the house</li>
+      <li data-i18n="am6">Drinking water</li>
+      <li data-i18n="am7">Air conditioning in both bedrooms</li>
+      <li data-i18n="am8">Basic kitchen utensils (kitchen-access package)</li>
+    </ul>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section tariff" id="tariff">
+  <div class="section-head">
+    <h2 data-i18n="t_title">Accommodation pricing</h2>
+    <p data-i18n="t_lead">Each night you book is one 24-hour stay. You can book several in a row.</p>
+  </div>
+  <div class="tariff-table" role="table" aria-label="Accommodation pricing">
+    <div class="tariff-row" role="row">
+      <div role="cell"><h3 data-i18n="t1t">Standard stay</h3><p data-i18n="t1p">Both bedrooms, both bathrooms and the hall.</p></div>
+      <div class="rate" role="cell"><strong>₹4,000</strong><span data-i18n="per24">per 24 hours</span></div>
+    </div>
+    <div class="tariff-row" role="row">
+      <div role="cell"><h3 data-i18n="t2t">With kitchen access</h3><p data-i18n="t2p">Everything in the standard stay, plus the kitchen and basic utensils.</p></div>
+      <div class="rate" role="cell"><strong>₹5,000</strong><span data-i18n="per24">per 24 hours</span></div>
+    </div>
+    <div class="tariff-row" role="row">
+      <div role="cell"><h3 data-i18n="t3t">Additional bed</h3><p data-i18n="t3p">Added to your booking for each night.</p></div>
+      <div class="rate" role="cell"><strong>₹500</strong><span data-i18n="perbed">per bed, per 24 hours</span></div>
+    </div>
+  </div>
+  <p class="note" data-i18n="t_note">You pay 50% online to confirm your dates. The remaining 50% is settled directly with Malaragam. Meals are not included in this pricing.</p>
+  <div class="estimator" id="estimator">
+    <h3 data-i18n="e_title">Work out your stay</h3>
+    <div class="est-controls">
+      <div class="stepper" role="group" aria-label="Number of nights">
+        <button type="button" id="nMinus" aria-label="Fewer nights">−</button>
+        <output id="nOut" aria-live="polite">2 nights</output>
+        <button type="button" id="nPlus" aria-label="More nights">+</button>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Package">
+        <label><input type="radio" name="estPkg" value="standard" checked><span data-i18n="t1t">Standard stay</span></label>
+        <label><input type="radio" name="estPkg" value="kitchen"><span data-i18n="t2t">With kitchen access</span></label>
+      </div>
+      <label class="est-beds"><span data-i18n="e_beds">Extra beds</span>
+        <select id="estBeds"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+    </div>
+    <div class="est-result">
+      <div><span data-i18n="s_total">Total</span><strong id="eTotal">–</strong></div>
+      <div><span data-i18n="s_adv">Pay now (50%)</span><strong id="eAdv">–</strong></div>
+      <a class="btn btn-maroon" href="#booking" id="eBook" data-i18n="e_cta">Book these dates</a>
+    </div>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section faq" id="faq">
+  <div class="section-head"><h2 data-i18n="q_title">Questions guests ask</h2></div>
+  <div class="faq-list">
+    <details><summary data-i18n="q1">Do I book a single room or the whole home?</summary><p data-i18n="a1">The whole home. Both bedrooms, both bathrooms, the hall and (with the kitchen package) the kitchen are yours alone.</p></details>
+    <details><summary data-i18n="q2">How many people can stay?</summary><p data-i18n="a2">Up to 6 guests, children included. Extra beds are ₹500 each per night.</p></details>
+    <details><summary data-i18n="q3">How does payment work?</summary><p data-i18n="a3">You pay 50% online to confirm your dates. The remaining 50% is settled directly with Malaragam.</p></details>
+    <details><summary data-i18n="q4">Can I book more than one night?</summary><p data-i18n="a4">Yes. Each night is one 24-hour stay, and you can book several in a row.</p></details>
+    <details><summary data-i18n="q5">Is food included?</summary><p data-i18n="a5">No, meals are not included in the pricing. The kitchen-access package lets you cook, with basic utensils provided.</p></details>
+    <details><summary data-i18n="q6">What if I do not finish paying?</summary><p data-i18n="a6">Your dates are held for 15 minutes while you pay. After that they are released for other guests.</p></details>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section gallery lamp-gallery" id="gallery">
+  <div class="gallery-lamp-glow" aria-hidden="true"></div>
+  <div class="section-head">
+    <h2 data-i18n="g_title">Take a look inside</h2>
+    <p data-i18n="g_lead">Photographs of the home as it is. Tap any picture to enlarge it.</p>
+  </div>
+  <div class="chips" role="group" aria-label="Filter photos">
+    <button class="chip" type="button" data-filter="all" aria-pressed="true" data-i18n="g_all">All</button>
+    <button class="chip" type="button" data-filter="bed" aria-pressed="false" data-i18n="g_bed">Bedrooms</button>
+    <button class="chip" type="button" data-filter="living" aria-pressed="false" data-i18n="g_liv">Hall, kitchen, bathroom</button>
+    <button class="chip" type="button" data-filter="out" aria-pressed="false" data-i18n="g_out">Entrance and details</button>
+  </div>
+  <div class="gallery-cols" id="galleryGrid">
+    <button class="g-item" data-cat="bed" type="button" data-index="0"><img src="assets/photo-06.jpg" alt="Bedroom one with white bedding and maroon cushions" loading="lazy"><span data-i18n="g6">Bedroom one</span></button>
+    <button class="g-item" data-cat="living" type="button" data-index="1"><img src="assets/photo-08.jpg" alt="Living hall with ceiling fan" loading="lazy"><span data-i18n="g8">The hall</span></button>
+    <button class="g-item" data-cat="bed" type="button" data-index="2"><img src="assets/photo-07.jpg" alt="Bedroom two with white bedding and maroon runner" loading="lazy"><span data-i18n="g7">Bedroom two</span></button>
+    <button class="g-item" data-cat="out" type="button" data-index="3"><img src="assets/photo-03.jpg" alt="Decorative pendant lamp with leaf cut-outs glowing amber" loading="lazy"><span data-i18n="g3">Pendant light</span></button>
+    <button class="g-item" data-cat="out" type="button" data-index="4"><img src="assets/photo-05.jpg" alt="Carved wooden entrance door" loading="lazy"><span data-i18n="g5">The entrance</span></button>
+    <button class="g-item" data-cat="living" type="button" data-index="5"><img src="assets/photo-02.jpg" alt="Bathroom with brown textured tiles" loading="lazy"><span data-i18n="g2">Bathroom</span></button>
+    <button class="g-item" data-cat="living" type="button" data-index="6"><img src="assets/photo-01.jpg" alt="Kitchen with blue cabinets" loading="lazy"><span data-i18n="g1">Kitchen</span></button>
+    <button class="g-item" data-cat="out" type="button" data-index="7"><img src="assets/photo-04.jpg" alt="Covered parking area at the house" loading="lazy"><span data-i18n="g4">Parking</span></button>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section nearby" id="nearby">
+  <div class="section-head">
+    <h2 data-i18n="n_title">Temples and towns nearby</h2>
+    <p data-i18n="n_lead">Mayiladuthurai sits in the Cauvery delta, among some of Tamil Nadu's best-known temples.</p>
+  </div>
+  <ul class="places">
+    <li><button class="place-btn" type="button" data-slug="mayuranathar" data-q="Mayuranathar Temple, Mayiladuthurai" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p1">Mayuranathar Temple</b><span data-i18n="pd1">The Shiva temple in Mayiladuthurai itself. The town takes its name from the peacock (mayil) in its story.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab1">The main Shiva temple of Mayiladuthurai, set in the middle of town. According to its story, Parvati worshipped Shiva here in the form of a peahen, and the town takes its name from that peacock (mayil). Many pilgrims come in the Tamil month of Aippasi (October to November) to bathe in the Cauvery.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="parimala-ranganathar" data-q="Parimala Ranganathar Temple, Thiruindalur, Mayiladuthurai" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p2">Parimala Ranganathar Temple, Thiruindalur</b><span data-i18n="pd2">A Vishnu temple in the town, counted among the Divya Desams.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab2">A Vishnu temple in Thiruindalur, within Mayiladuthurai town, where the deity rests in a reclining pose as Parimala Ranganathar. It is counted among the 108 Divya Desams, and the name Indalur is linked to the Moon (Indu) who is said to have worshipped here.</span>
+    </button></li>
+    <li class="navagraha-card">
+      <button class="navagraha-toggle" type="button" aria-expanded="false" aria-controls="navagraha-temples">
+        <span class="navagraha-heading">
+          <h3 data-i18n="n_navagraha">The Navagraha Temple Circuit</h3>
+          <p data-i18n="n_navagraha_lead">Explore the nine traditional planetary temples of the Cauvery delta. The shrines are spread across the region, so plan your visits by location.</p>
+          <span class="navagraha-hint" data-i18n="n_navagraha_open">Tap to explore all 9 temples</span>
+        </span>
+        <span class="navagraha-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <ul class="navagraha-temples" id="navagraha-temples" hidden>
+    <li><button class="place-btn" type="button" data-slug="vaitheeswaran" data-q="Vaitheeswaran Koil, Tamil Nadu" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p3">Vaitheeswaran Koil</b><span data-i18n="pd3">A Shiva temple known for healing prayers and linked with Angaraka (Mars).</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab3">Here Shiva is worshipped as Vaidyanathar, the divine physician, so people come to pray for good health and relief from illness. The temple also has a shrine for Angaraka (Mars) and is one of the Navagraha temples of the Cauvery delta.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="thiruvengadu" data-q="Swetharanyeswarar Temple, Thiruvengadu" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p4">Thiruvengadu</b><span data-i18n="pd4">Swetharanyeswarar Temple, linked with Budha (Mercury).</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab4">The Swetharanyeswarar Temple is one of the Navagraha temples, dedicated to Budha (Mercury), and is also known for its Aghora Murthi shrine. Families often visit for prayers connected with learning and communication.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="keezhaperumpallam" data-q="Naganathaswamy Temple, Keezhaperumpallam" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p5">Keezhaperumpallam</b><span data-i18n="pd5">The temple associated with Ketu.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab5">A small, quiet Shiva temple that is the Navagraha temple for Ketu. It is usually visited together with the other Navagraha temples of the region.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="suriyanar-koil" data-q="Suryanar Koil Sun Temple, Thanjavur Tamil Nadu" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p8">Suriyanar Koil — Surya (Sun)</b><span data-i18n="pd8">The Sun temple near Aduthurai, associated with Surya.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab8">Suriyanar Koil is the Navagraha shrine for Surya (the Sun). Surya is worshipped as the principal deity, with shrines for the other planetary deities within the temple complex.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="thingalur" data-q="Kailasanathar Temple Thingalur Moon Navagraha" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p9">Thingalur — Chandra (Moon)</b><span data-i18n="pd9">Kailasanathar Temple, the traditional Chandra sthalam.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab9">Kailasanathar Temple at Thingalur is traditionally associated with Chandra (the Moon) in the Navagraha circuit.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="alangudi" data-q="Apatsahayesvarar Guru Bhagavan Temple Alangudi" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p10">Alangudi — Guru (Jupiter)</b><span data-i18n="pd10">Apatsahayesvarar Temple, associated with Guru Bhagavan.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab10">Apatsahayesvarar Temple at Alangudi is the traditional Guru (Jupiter) sthalam in the Navagraha circuit.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="kanjanur" data-q="Agneeswarar Temple Kanjanur Sukran Venus" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p11">Kanjanur — Shukra (Venus)</b><span data-i18n="pd11">Agneeswarar Temple, associated with Shukra.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab11">Agneeswarar Temple at Kanjanur is traditionally associated with Shukra (Venus) in the Navagraha circuit.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="thirunallar" data-q="Dharbaranyeswarar Temple Thirunallar Saneeswaran Karaikal" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p12">Thirunallar — Shani (Saturn)</b><span data-i18n="pd12">Dharbaranyeswarar Temple in Karaikal, known for its Saneeswaran shrine.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab12">Dharbaranyeswarar Temple at Thirunallar, in Karaikal, is the traditional Shani (Saturn) sthalam. It is in the Union Territory of Puducherry, not Tamil Nadu.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="thirunageswaram" data-q="Naganathar Temple Thirunageswaram Rahu" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p13">Thirunageswaram — Rahu</b><span data-i18n="pd13">Naganathar Temple, the traditional Rahu sthalam near Kumbakonam.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab13">Naganathar Temple at Thirunageswaram is traditionally associated with Rahu in the Navagraha circuit. The temple is near Kumbakonam.</span>
+    </button></li>
+      </ul>
+    </li>
+    <li><button class="place-btn" type="button" data-slug="thirumanancheri" data-q="Kalyanasundareswarar Temple, Thirumanancheri" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p6">Thirumanancheri</b><span data-i18n="pd6">Kalyanasundareswarar Temple, where couples pray for a good marriage.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab6">Tradition holds that the wedding of Shiva and Parvati took place here, so the temple is a popular place for couples and families to pray for a good marriage. Name boards and offerings here are often linked to weddings.</span>
+    </button></li>
+    <li><button class="place-btn" type="button" data-slug="tharangambadi" data-q="Dansborg Fort, Tharangambadi" aria-haspopup="dialog">
+      <span class="place-text"><b data-i18n="p7">Tharangambadi (Tranquebar)</b><span data-i18n="pd7">A former Danish trading town on the coast, with the Dansborg fort beside the sea.</span></span>
+      <span class="place-more" data-i18n="pop_more">About this place</span>
+      <span hidden data-i18n="ab7">Tharangambadi, once called Tranquebar, was a Danish trading settlement from the early 1600s. The Dansborg fort stands right beside the sea and now houses a small museum, and the town has Danish-era streets and buildings worth a slow walk.</span>
+    </button></li>
+  </ul>
+  <p class="note" data-i18n="n_note">Journey times and temple opening hours change through the year. Check both before you set out.</p>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="booking-head">
+      <h2 data-i18n="b_title">Book the whole home</h2>
+      <p data-i18n="b_lead">Choose your dates, see the price, and pay 50% to confirm. We hold your dates for 15 minutes while you pay.</p>
+      <p class="test-ribbon" id="testRibbon" hidden>Test mode: payments here use Razorpay test credentials and no real money moves.</p>
+    </div>
+
+    <form class="booking-card" id="bookingForm" novalidate>
+      <div class="form-main">
+        <fieldset class="f-group">
+          <legend data-i18n="l_dates">Your dates</legend>
+          <div class="row2">
+            <label><span data-i18n="l_in">Check-in</span><input type="date" id="checkIn" name="check_in" required></label>
+            <label><span data-i18n="l_out">Check-out</span><input type="date" id="checkOut" name="check_out" required></label>
+          </div>
+          <p class="inline-msg" id="availMsg" role="status"></p>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend data-i18n="l_guests">Guests</legend>
+          <div class="row2">
+            <label><span data-i18n="l_adults">Adults</span><select id="adults" name="adults"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
+            <label><span data-i18n="l_children">Children</span><select id="children" name="children"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+          </div>
+          <p class="hint" data-i18n="l_cap">The home sleeps up to 6 guests, children included.</p>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend data-i18n="l_pkg">Package</legend>
+          <div class="pkg-options">
+            <label class="pkg"><input type="radio" name="package" value="standard" checked><span><b data-i18n="t1t">Standard stay</b><i>₹4,000 <em data-i18n="per24">per 24 hours</em></i></span></label>
+            <label class="pkg"><input type="radio" name="package" value="kitchen"><span><b data-i18n="t2t">With kitchen access</b><i>₹5,000 <em data-i18n="per24">per 24 hours</em></i></span></label>
+          </div>
+          <label class="beds"><span data-i18n="l_beds">Additional beds (₹500 each, per night)</span>
+            <select id="beds" name="extra_beds"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend data-i18n="l_you">Your details</legend>
+          <label><span data-i18n="l_name">Full name</span><input type="text" id="guestName" name="guest_name" autocomplete="name" required></label>
+          <div class="row2">
+            <label><span data-i18n="l_phone">Mobile number</span><input type="tel" id="guestPhone" name="guest_phone" autocomplete="tel" inputmode="tel" placeholder="+91" required></label>
+            <label><span data-i18n="l_email">Email</span><input type="email" id="guestEmail" name="guest_email" autocomplete="email" required></label>
+          </div>
+          <label><span data-i18n="l_notes">Anything we should know? (optional)</span><textarea id="notes" name="notes" rows="2"></textarea></label>
+        </fieldset>
+      </div>
+
+      <aside class="form-summary" aria-live="polite">
+        <div id="summaryPanel">
+          <h3 data-i18n="s_title">Your price</h3>
+          <dl class="sum-lines" id="sumLines"><div class="sum-empty" data-i18n="s_empty">Pick your dates to see the price.</div></dl>
+          <dl class="sum-total">
+            <div><dt data-i18n="s_total">Total</dt><dd id="sumTotal">–</dd></div>
+            <div class="due"><dt data-i18n="s_adv">Pay now (50%)</dt><dd id="sumAdvance">–</dd></div>
+            <div><dt data-i18n="s_bal">Balance, paid to Malaragam</dt><dd id="sumBalance">–</dd></div>
+          </dl>
+          <p class="inline-msg err" id="formMsg" role="alert"></p>
+          <button class="btn btn-gold btn-block" id="payBtn" type="submit"><span id="payLabel">Pay advance and confirm</span></button>
+          <a class="btn btn-ghost btn-block" id="waLink" href="https://wa.me/917708896936" target="_blank" rel="noopener" data-i18n="wa_alt">Ask on WhatsApp instead</a>
+          <p class="hint">Questions? <a href="mailto:malaragamhomestay@gmail.com">malaragamhomestay@gmail.com</a></p>
+          <p class="hint" data-i18n="s_secure">Payments are handled by Razorpay. Your booking is confirmed only after the payment is verified.</p>
+        </div>
+        <div id="holdPanel" hidden>
+          <h3 data-i18n="hold_title">Dates held for you</h3>
+          <p class="hold-time" id="holdTime">15:00</p>
+          <p class="hint" data-i18n="hold_text">Finish the payment before the timer ends. After that the dates are released.</p>
+        </div>
+        <div id="donePanel" hidden>
+          <h3 data-i18n="done_title">Booking confirmed</h3>
+          <p class="done-ref" id="doneRef"></p>
+          <p id="doneText"></p>
+          <p class="hint" data-i18n="done_next">Keep this reference. Message us on WhatsApp if you need to change anything.</p>
+        </div>
+      </aside>
+    </form>
+  </div>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section reviews-teaser" id="reviews">
+  <div class="section-head">
+    <h2 data-i18n="rv_title">Guest reviews</h2>
+    <p data-i18n="rv_p">Reviews on this site are written by people who stayed here. We read each one before it appears, and we never write them ourselves.</p>
+  </div>
+  <a class="btn btn-maroon" href="reviews.html" data-i18n="rv_cta">Read and write reviews</a>
+</section>
+<div class="kolam-divider" aria-hidden="true"><svg class="kolam-art" viewBox="0 0 160 100" role="img" aria-label="Traditional kolam being drawn" xmlns="http://www.w3.org/2000/svg"><g class="kolam-lines"><path d="M80 8 C96 8 104 22 96 34 C88 46 72 46 64 34 C56 22 64 8 80 8Z"/><path d="M80 92 C64 92 56 78 64 66 C72 54 88 54 96 66 C104 78 96 92 80 92Z"/><path d="M8 50 C8 34 22 26 34 34 C46 42 46 58 34 66 C22 74 8 66 8 50Z"/><path d="M152 50 C152 66 138 74 126 66 C114 58 114 42 126 34 C138 26 152 34 152 50Z"/><path d="M80 20 C104 20 120 36 120 50 C120 64 104 80 80 80 C56 80 40 64 40 50 C40 36 56 20 80 20Z"/><path d="M80 32 C92 32 100 40 100 50 C100 60 92 68 80 68 C68 68 60 60 60 50 C60 40 68 32 80 32Z"/><path d="M80 42 L88 50 L80 58 L72 50Z"/></g><g class="kolam-dots"><circle cx="80" cy="3" r="2"/><circle cx="80" cy="97" r="2"/><circle cx="3" cy="50" r="2"/><circle cx="157" cy="50" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="132" cy="18" r="2"/><circle cx="28" cy="82" r="2"/><circle cx="132" cy="82" r="2"/></g></svg></div>
+
+<section class="section contact" id="contact">
+  <div class="contact-info">
+    <h2 data-i18n="c_title">Find Malaragam</h2>
+    <dl>
+      <div><dt data-i18n="c_addr">Address</dt><dd>Plot No. 22, Saratha Nagar,<br>Town Station Road,<br>Mayiladuthurai – 609001, Tamil Nadu</dd></div>
+      <div><dt data-i18n="c_phone">Phone and WhatsApp</dt><dd><a href="tel:+917708896936">+91 77088 96936</a></dd></div>
+      <div><dt data-i18n="c_email">Email</dt><dd><a href="mailto:malaragamhomestay@gmail.com">malaragamhomestay@gmail.com</a></dd></div>
+    </dl>
+    <div class="contact-actions">
+      <a class="btn btn-maroon" href="https://wa.me/917708896936?text=Hello%20Malaragam%2C%20I%20would%20like%20to%20ask%20about%20a%20stay." target="_blank" rel="noopener" data-i18n="c_wa">Message on WhatsApp</a>
+      <a class="btn btn-line-dark" href="https://www.google.com/maps/search/?api=1&query=Plot%20No.%2022%2C%20Saratha%20Nagar%2C%20Town%20Station%20Road%2C%20Mayiladuthurai%20609001" target="_blank" rel="noopener" data-i18n="c_map">Open in Google Maps</a>
+    </div>
+  </div>
+  <div class="map-frame"><iframe title="Map showing Malaragam Homestay in Mayiladuthurai" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Saratha%20Nagar%2C%20Town%20Station%20Road%2C%20Mayiladuthurai%20609001&output=embed"></iframe></div>
+</section>
+</main>
+
+<div class="border-band" aria-hidden="true"></div>
+<footer class="site-footer">
+  <div><span class="brand-mark" aria-hidden="true">ம</span><strong>Malaragam Homestay</strong></div>
+  <p data-i18n="foot_tag">Rooted in tradition, designed for comfort.</p>
+  <a class="foot-mail" href="mailto:malaragamhomestay@gmail.com">malaragamhomestay@gmail.com</a>
+  <small>© <span id="year"></span> Malaragam Homestay, Mayiladuthurai</small>
+</footer>
+
+<a class="wa-float" href="https://wa.me/917708896936?text=Hello%20Malaragam%2C%20I%20would%20like%20to%20ask%20about%20a%20stay." target="_blank" rel="noopener" aria-label="Chat with Malaragam on WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.200Zm4.500-6.100c-.2-.1-1.500-.7-1.700-.8-.2-.1-.4-.1-.6.100l-.8 1c-.1.200-.3.200-.5.100-1.600-.8-2.600-1.400-3.600-3.100-.3-.5.300-.5.800-1.500.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.100-.7.300-.7.700-1 1.500-1 2.400s.6 2.300 1.500 3.300c1.800 2.300 4 3.400 6.400 3.900.8.200 1.500.1 2-.2.600-.4 1-1.100 1.100-1.800 0-.2 0-.3-.2-.4Z"/></svg>
+</a>
+
+<div class="place-modal" id="placeModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" hidden>
+  <div class="pm-card">
+    <button class="pm-close" type="button" aria-label="Close">×</button>
+    <img class="pm-photo" id="pmPhoto" alt="" hidden>
+    <h3 id="pmTitle"></h3>
+    <p id="pmAbout"></p>
+    <div class="pm-map"><iframe id="pmMap" title="Map of the place" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <div class="pm-links">
+      <a class="btn btn-maroon btn-sm" id="pmMaps" target="_blank" rel="noopener" data-i18n="pop_maps">Open in Google Maps</a>
+      <a class="btn btn-line-dark btn-sm" id="pmPhotos" target="_blank" rel="noopener" data-i18n="pop_photos">See photos on Google</a>
+    </div>
+    <p class="hint" data-i18n="n_note">Journey times and temple opening hours change through the year. Check both before you set out.</p>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <button class="lb-close" type="button" aria-label="Close photo">×</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>
+</div>
+
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
