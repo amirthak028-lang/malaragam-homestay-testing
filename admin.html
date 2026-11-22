@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -266,6 +265,18 @@
             <input id="guestSearch" type="search" placeholder="Search name, mobile, email or booking reference">
             <span id="guestResultCount" class="muted booking-result-count"></span>
           </div>
+          <div id="reviewTools" class="booking-tools review-tools" hidden>
+            <label for="reviewSearch">Search reviews</label>
+            <input id="reviewSearch" type="search" placeholder="Search guest name or review text">
+            <label for="reviewStatusFilter">Review status</label>
+            <select id="reviewStatusFilter">
+              <option value="all">All reviews</option>
+              <option value="pending">Pending approval</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <span id="reviewResultCount" class="muted booking-result-count"></span>
+          </div>
           <div id="tableContent" class="table-wrap"></div>
         </article>
       </section>
@@ -318,4 +329,3 @@
   <script src="admin.js"></script>
 </body>
 </html>
-
