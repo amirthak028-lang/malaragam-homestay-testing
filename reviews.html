@@ -53,8 +53,9 @@
     </div>
     <form class="review-form" id="reviewForm">
       <h3 data-i18n="rp_form">Share your stay</h3>
-      <label><span data-i18n="rp_name">Your name</span><input type="text" name="guest_name" maxlength="60" required></label>
-      <label><span data-i18n="rp_month">Month of your stay (for example, November 2026)</span><input type="text" name="stay_month" maxlength="30"></label>
+      <p class="hint" data-i18n="rp_verified_only">Only guests with a completed, confirmed booking can submit a review.</p>
+      <label><span data-i18n="rp_ref">Booking reference</span><input type="text" name="booking_reference" maxlength="20" placeholder="MAL010" autocomplete="off" required></label>
+      <label><span data-i18n="rp_mobile">Mobile number used for the booking</span><input type="tel" name="mobile" inputmode="tel" autocomplete="tel" maxlength="20" required></label>
       <fieldset class="f-group" style="border:0;padding:0;margin:0">
         <legend style="font:600 .95rem var(--body);color:var(--teak)" data-i18n="rp_rating">Rating (5 is best)</legend>
         <div class="rating-pick">
@@ -66,8 +67,7 @@
         </div>
         <p class="hint" id="ratingLabel" aria-live="polite"></p>
       </fieldset>
-      <label><span data-i18n="rp_text">Your review</span><textarea name="body" id="rvBody" rows="5" maxlength="1200" required></textarea><small class="hint" id="charCount">0 / 1200</small></label>
-      <label><span data-i18n="rp_ref">Booking reference (optional, marks your review as a verified stay)</span><input type="text" name="booking_reference" maxlength="20" placeholder="MAL000"></label>
+      <label><span data-i18n="rp_text">Your review</span><textarea name="review_text" id="rvBody" rows="5" maxlength="1200" required></textarea><small class="hint" id="charCount">0 / 1200</small></label>
       <p class="inline-msg" id="reviewMsg" role="status"></p>
       <button class="btn btn-maroon" type="submit" data-i18n="rp_send">Send review</button>
     </form>
@@ -89,3 +89,4 @@
 <script src="reviews.js"></script>
 </body>
 </html>
+
