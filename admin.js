@@ -39,6 +39,7 @@
   );
 
   let currentSection = 'overview';
+  let reviewRows = [];
 
   const titles = {
     overview: 'Overview',
@@ -673,7 +674,93 @@
     setDashboardMessage('Bookings and related guest/payment information loaded.');
   }
 
+  function renderReviewManagement() {
+    const query = $('reviewSearch').value.trim().toLowerCase();
+    const status = $('reviewStatusFilter').value;
+    const rows = reviewRows.filter(review => {
+      const matchesStatus = status === 'all' || review.status === status;
+      const haystack = `${review.guest_name || ''} ${review.review_text || ''}`.toLowerCase();
+      return matchesStatus && (!query || haystack.includes(query));
+    });
+    $('reviewResultCount').textContent = `${rows.length} review${rows.length === 1 ? '' : 's'}`;
+    if (!rows.length) {
+      $('tableContent').innerHTML = '<p class="muted booking-empty">No reviews match this filter.</p>';
+      return;
+    }
+    $('tableContent').innerHTML = `<div class="review-admin-list">${rows.map(review => {
+      const statusClass = ['pending','approved','rejected'].includes(review.status) ? review.status : 'unknown';
+      const stars = '★'.repeat(Math.max(0, Math.min(5, Number(review.rating) || 0))) + '☆'.repeat(5 - Math.max(0, Math.min(5, Number(review.rating) || 0)));
+      const actions = review.status === 'pending' ? `
+        <div class="review-admin-actions">
+          <button class="review-action approve" type="button" data-review-action="approved" data-review-id="${escapeHtml(review.id)}">Approve</button>
+          <button class="review-action reject" type="button" data-review-action="rejected" data-review-id="${escapeHtml(review.id)}">Reject</button>
+        </div>` : '<p class="review-admin-readonly">This review has already been moderated.</p>';
+      return `<article class="review-admin-card">
+        <div class="review-admin-top"><div><strong>${escapeHtml(review.guest_name || 'Guest')}</strong><span class="review-admin-date">${escapeHtml(formatDate(review.created_at))}</span></div>
+        <span class="status-pill ${statusClass}">${escapeHtml(review.status || 'unknown')}</span></div>
+        <div class="review-admin-rating" aria-label="${Number(review.rating) || 0} out of 5">${stars}</div>
+        <p class="review-admin-text">${escapeHtml(review.review_text || '')}</p>
+        <div class="review-admin-meta">${review.is_verified_guest ? '<span class="verified-label">✓ Verified guest</span>' : '<span>Not verified</span>'}
+          <span>Review ID: ${escapeHtml(review.id)}</span></div>
+        ${actions}
+      </article>`;
+    }).join('')}</div>`;
+  }
+
+  async function loadReviewManagement() {
+    $('tableHeading').textContent = 'Guest review moderation';
+    $('tableContent').innerHTML = '<p class="muted">Loading guest reviews…</p>';
+    $('reviewTools').hidden = false;
+    const { data, error } = await client.from('reviews')
+      .select('id,booking_id,guest_name,rating,review_text,is_verified_guest,status,created_at')
+      .order('created_at', { ascending: false }).limit(500);
+    if (error) throw new Error('Could not load reviews: ' + error.message);
+    reviewRows = data || [];
+    renderReviewManagement();
+    const pending = reviewRows.filter(row => row.status === 'pending').length;
+    setDashboardMessage(`${reviewRows.length} review(s) loaded · ${pending} awaiting moderation. Changes are recorded through the secure review moderation function.`);
+  }
+
+  async function moderateReview(reviewId, action, button) {
+    if (!['approved', 'rejected'].includes(action)) return;
+    const label = action === 'approved' ? 'approve' : 'reject';
+    if (!window.confirm(`Are you sure you want to ${label} this review?`)) return;
+    button.disabled = true;
+    button.textContent = action === 'approved' ? 'Approving…' : 'Rejecting…';
+    try {
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
+      if (sessionError) throw sessionError;
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error('Your admin session has expired. Please sign in again.');
+      const response = await fetch(`${CFG.SUPABASE_URL}/functions/v1/moderate-guest-review`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: CFG.SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ review_id: reviewId, action })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'Could not update this review.');
+      setDashboardMessage(action === 'approved' ? 'Review approved. It can now appear on the public reviews page.' : 'Review rejected. It will remain hidden from the public reviews page.');
+      await loadReviewManagement();
+    } catch (error) {
+      setDashboardMessage(error.message || 'Review moderation failed.', true);
+      button.disabled = false;
+      button.textContent = action === 'approved' ? 'Approve' : 'Reject';
+    }
+  }
+
   async function loadTable(section) {
+    if (section === 'reviews') {
+      $('bookingTools').hidden = true;
+      $('paymentTools').hidden = true;
+      $('guestTools').hidden = true;
+      await loadReviewManagement();
+      return;
+    }
+    $('reviewTools').hidden = true;
     if (section === 'bookings') {
       $('paymentTools').hidden = true;
       $('guestTools').hidden = true;
@@ -955,10 +1042,14 @@
   $('paymentSearch').addEventListener('input', renderPaymentManagement);
   $('paymentStatusFilter').addEventListener('change', renderPaymentManagement);
   $('guestSearch').addEventListener('input', renderGuestManagement);
+  $('reviewSearch').addEventListener('input', renderReviewManagement);
+  $('reviewStatusFilter').addEventListener('change', renderReviewManagement);
   $('bookingSearch').addEventListener('input', renderBookingManagement);
   $('bookingStatusFilter').addEventListener('change', renderBookingManagement);
 
   $('tableContent').addEventListener('click', event => {
+    const reviewButton = event.target.closest('[data-review-action][data-review-id]');
+    if (reviewButton) { moderateReview(reviewButton.dataset.reviewId, reviewButton.dataset.reviewAction, reviewButton); return; }
     const paymentButton = event.target.closest('[data-payment-id]');
     if (paymentButton) { openPaymentDetails(paymentButton.dataset.paymentId); return; }
     const guestButton = event.target.closest('[data-guest-id]');
