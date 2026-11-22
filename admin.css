@@ -132,3 +132,24 @@ body.modal-open{overflow:hidden}
 .guest-payment-state.pending { color: #9b6b16; }
 .guest-payment-state.expired { color: #8b8175; }
 .guest-management-table { min-width: 760px; }
+
+
+/* Secure review moderation interface */
+.review-tools{grid-template-columns:minmax(220px,1fr) 190px auto}
+.review-admin-list{display:grid;gap:14px}
+.review-admin-card{background:#fffdf9;border:1px solid var(--line);border-radius:12px;padding:18px 20px;min-width:0}
+.review-admin-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.review-admin-top strong{display:block;color:var(--ink);font-size:14px}
+.review-admin-date{display:block;margin-top:4px;color:var(--muted);font-size:11px}
+.review-admin-rating{margin:13px 0 8px;color:#b47c1c;letter-spacing:2px;font-size:17px}
+.review-admin-text{margin:0;color:var(--ink);font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.review-admin-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:14px;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
+.verified-label{color:var(--green);font-weight:700}
+.review-admin-actions{display:flex;gap:9px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.review-action{border:0;border-radius:8px;padding:9px 16px;font-size:11px;font-weight:700}
+.review-action:disabled{opacity:.6;cursor:wait}
+.review-action.approve{background:#e4f1e8;color:#27664e}
+.review-action.reject{background:#f8e7e7;color:#a33b3b}
+.review-admin-readonly{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+@media(max-width:700px){.review-tools{grid-template-columns:1fr}.review-admin-card{padding:15px}.review-admin-top{align-items:flex-start}}
+
