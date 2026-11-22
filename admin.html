@@ -277,6 +277,24 @@
             </select>
             <span id="reviewResultCount" class="muted booking-result-count"></span>
           </div>
+          <section id="adminTools" class="admin-tools" hidden aria-label="Admin account management">
+            <div class="admin-invite-panel">
+              <div>
+                <p class="eyebrow">NEW TEAM MEMBER</p>
+                <h3>Invite a manager</h3>
+                <p class="muted">The manager receives an invitation email and sets their own password.</p>
+              </div>
+              <form id="adminInviteForm" class="admin-invite-form">
+                <label for="adminFullName">Full name</label>
+                <input id="adminFullName" name="full_name" type="text" maxlength="100" required placeholder="Manager full name">
+                <label for="adminEmail">Email address</label>
+                <input id="adminEmail" name="email" type="email" maxlength="254" required placeholder="manager@example.com">
+                <button id="adminInviteButton" class="primary-button" type="submit">Send manager invitation</button>
+                <p id="adminInviteMessage" class="admin-inline-message" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+            <p class="admin-security-note">Only the Primary Admin can manage accounts. Primary Admin access is protected and cannot be changed here.</p>
+          </section>
           <div id="tableContent" class="table-wrap"></div>
         </article>
       </section>
