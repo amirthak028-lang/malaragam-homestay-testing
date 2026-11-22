@@ -1,84 +1,188 @@
 (function(){
 'use strict';
-const CFG = window.MALARAGAM_CONFIG, t = window.MALARAGAM_T, live = window.MALARAGAM_LIVE;
+const CFG = window.MALARAGAM_CONFIG;
+const t = window.MALARAGAM_T;
+const live = window.MALARAGAM_LIVE;
 const list = document.getElementById('reviewList');
 const form = document.getElementById('reviewForm');
 const msg = document.getElementById('reviewMsg');
-if(!list) return;
-const H = {apikey:CFG.SUPABASE_ANON_KEY, Authorization:'Bearer '+CFG.SUPABASE_ANON_KEY};
+if (!list) return;
 
-function empty(text){
+const headers = {
+  apikey: CFG.SUPABASE_ANON_KEY,
+  Authorization: 'Bearer ' + CFG.SUPABASE_ANON_KEY
+};
+
+function empty(text) {
   list.textContent = '';
-  const d = document.createElement('div'); d.className = 'empty-state'; d.textContent = text; list.appendChild(d);
+  const d = document.createElement('div');
+  d.className = 'empty-state';
+  d.textContent = text;
+  list.appendChild(d);
 }
-function card(r){
-  const a = document.createElement('article'); a.className = 'review';
-  const meta = document.createElement('div'); meta.className = 'review-meta';
-  const n = document.createElement('strong'); n.textContent = r.guest_name;
-  const s = document.createElement('span'); s.className = 'stars';
-  const rating = Math.max(1,Math.min(5,+r.rating||5)); s.textContent = '★'.repeat(rating)+'☆'.repeat(5-rating); s.setAttribute('aria-label', rating+' out of 5');
-  meta.append(n,s);
-  if(r.verified){ const b = document.createElement('span'); b.className='badge'; b.textContent = t('verified'); meta.appendChild(b); }
-  const when = r.stay_month || (r.created_at ? new Date(r.created_at).toLocaleDateString('en-IN',{month:'long',year:'numeric'}) : '');
-  if(when){ const d = document.createElement('span'); d.className='review-date'; d.textContent = when; meta.appendChild(d); }
-  const p = document.createElement('p'); p.textContent = r.body;   // textContent only: reviews are user text
-  a.append(meta,p); return a;
-}
-let all = [];
-const tools = document.getElementById('reviewTools'), fSel = document.getElementById('rvFilter'), sSel = document.getElementById('rvSort');
-function render(){
-  const min = +fSel.value;
-  let rows = all.filter(r=>r.rating>=min);
-  if(sSel.value==='high') rows = rows.slice().sort((a,b)=>b.rating-a.rating || new Date(b.created_at)-new Date(a.created_at));
-  list.textContent='';
-  if(!rows.length){ empty(t('noReviews')); return; }
-  rows.forEach(x=>list.appendChild(card(x)));
-}
-fSel.addEventListener('change',render); sSel.addEventListener('change',render);
-async function load(){
-  if(!live){ empty(t('noReviews')); return; }
-  try{
-    const r = await fetch(`${CFG.SUPABASE_URL}/rest/v1/reviews?status=eq.approved&select=id,guest_name,rating,body,stay_month,verified,created_at&order=created_at.desc&limit=50`,{headers:H});
-    if(!r.ok) throw new Error(r.status);
-    const rows = await r.json();
-    if(!rows.length){ empty(t('noReviews')); return; }
-    all = rows; tools.hidden = false; render();
-  }catch(e){ empty(t('loadFail')); }
-}
-load();
-document.addEventListener('malaragam:lang',()=>{ if(list.firstChild && list.firstChild.className==='empty-state') load(); });
 
-form.addEventListener('submit', async e=>{
-  e.preventDefault();
-  msg.className='inline-msg';
-  if(!live){ msg.className='inline-msg err'; msg.textContent = t('notLive'); return; }
-  const f = new FormData(form);
-  const row = {
-    guest_name:(f.get('guest_name')||'').trim(), stay_month:(f.get('stay_month')||'').trim()||null,
-    rating:+f.get('rating'), body:(f.get('body')||'').trim(),
-    booking_reference:(f.get('booking_reference')||'').trim().toUpperCase()||null,
-    status:'pending'        // the database policy also forces this; guests can never self-approve
+function card(r) {
+  const article = document.createElement('article');
+  article.className = 'review';
+
+  const meta = document.createElement('div');
+  meta.className = 'review-meta';
+
+  const name = document.createElement('strong');
+  name.textContent = r.guest_name || '';
+  const stars = document.createElement('span');
+  stars.className = 'stars';
+  const rating = Math.max(1, Math.min(5, Number(r.rating) || 5));
+  stars.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+  stars.setAttribute('aria-label', rating + ' out of 5');
+  meta.append(name, stars);
+
+  if (r.is_verified_guest) {
+    const badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.textContent = t('verified');
+    meta.appendChild(badge);
+  }
+
+  if (r.created_at) {
+    const date = document.createElement('span');
+    date.className = 'review-date';
+    date.textContent = new Date(r.created_at).toLocaleDateString('en-IN', {
+      month: 'long',
+      year: 'numeric'
+    });
+    meta.appendChild(date);
+  }
+
+  const paragraph = document.createElement('p');
+  paragraph.textContent = r.review_text || '';
+  article.append(meta, paragraph);
+  return article;
+}
+
+let all = [];
+const tools = document.getElementById('reviewTools');
+const filter = document.getElementById('rvFilter');
+const sort = document.getElementById('rvSort');
+
+function render() {
+  const min = Number(filter.value);
+  let rows = all.filter(r => Number(r.rating) >= min);
+  if (sort.value === 'high') {
+    rows = rows.slice().sort((a, b) =>
+      Number(b.rating) - Number(a.rating) ||
+      new Date(b.created_at) - new Date(a.created_at)
+    );
+  }
+  list.textContent = '';
+  if (!rows.length) {
+    empty(t('noReviews'));
+    return;
+  }
+  rows.forEach(row => list.appendChild(card(row)));
+}
+
+filter.addEventListener('change', render);
+sort.addEventListener('change', render);
+
+async function load() {
+  if (!live) {
+    empty(t('noReviews'));
+    return;
+  }
+  try {
+    const url = `${CFG.SUPABASE_URL}/rest/v1/reviews?status=eq.approved&select=id,guest_name,rating,review_text,is_verified_guest,created_at&order=created_at.desc&limit=50`;
+    const response = await fetch(url, { headers });
+    if (!response.ok) throw new Error(`Review list request failed: ${response.status}`);
+    all = await response.json();
+    tools.hidden = !all.length;
+    render();
+  } catch (error) {
+    console.error('Could not load approved reviews:', error);
+    empty(t('loadFail'));
+  }
+}
+
+load();
+document.addEventListener('malaragam:lang', () => {
+  if (list.firstChild && list.firstChild.className === 'empty-state') load();
+});
+
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  msg.className = 'inline-msg';
+  msg.textContent = '';
+
+  if (!live) {
+    msg.className = 'inline-msg err';
+    msg.textContent = t('notLive');
+    return;
+  }
+
+  const fields = new FormData(form);
+  const payload = {
+    booking_reference: String(fields.get('booking_reference') || '').trim().toUpperCase(),
+    mobile: String(fields.get('mobile') || '').trim(),
+    rating: Number(fields.get('rating')),
+    review_text: String(fields.get('review_text') || '').trim()
   };
-  try{
-    const r = await fetch(`${CFG.SUPABASE_URL}/rest/v1/reviews`,{method:'POST',headers:{...H,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(row)});
-    if(!r.ok) throw new Error(r.status);
-    form.reset(); msg.className='inline-msg ok'; msg.textContent = t('sent');
-  }catch(err){ msg.className='inline-msg err'; msg.textContent = t('failGeneric'); }
+
+  const submit = form.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  try {
+    const response = await fetch(`${CFG.SUPABASE_URL}/functions/v1/submit-guest-review`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(result.error || t('failGeneric'));
+    }
+    form.reset();
+    const count = document.getElementById('charCount');
+    if (count) count.textContent = '0 / 1200';
+    const ratingLabel = document.getElementById('ratingLabel');
+    if (ratingLabel) ratingLabel.textContent = '';
+    msg.className = 'inline-msg ok';
+    msg.textContent = t('sent');
+  } catch (error) {
+    msg.className = 'inline-msg err';
+    msg.textContent = error.message || t('failGeneric');
+  } finally {
+    submit.disabled = false;
+  }
 });
 })();
 
-/* rating words and character counter */
+/* Rating words and character counter. */
 (function(){
   const t = window.MALARAGAM_T;
-  const lbl = document.getElementById('ratingLabel'), body = document.getElementById('rvBody'), cnt = document.getElementById('charCount');
-  const show = n => { lbl.textContent = n ? n+' / 5: '+t('r'+n) : ''; };
+  const label = document.getElementById('ratingLabel');
+  const body = document.getElementById('rvBody');
+  const count = document.getElementById('charCount');
+  if (!label || !body || !count) return;
+
+  const show = n => { label.textContent = n ? n + ' / 5: ' + t('r' + n) : ''; };
   const radios = [...document.querySelectorAll('input[name=rating]')];
-  radios.forEach(r=>{
-    r.addEventListener('change',()=>show(r.value));
-    r.parentElement.addEventListener('mouseenter',()=>show(r.value));
-    r.parentElement.addEventListener('mouseleave',()=>{ const c = radios.find(x=>x.checked); show(c?c.value:''); });
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => show(radio.value));
+    radio.parentElement.addEventListener('mouseenter', () => show(radio.value));
+    radio.parentElement.addEventListener('mouseleave', () => {
+      const checked = radios.find(item => item.checked);
+      show(checked ? checked.value : '');
+    });
   });
   show(5);
-  document.addEventListener('malaragam:lang',()=>{ const c = radios.find(x=>x.checked); show(c?c.value:''); });
-  body.addEventListener('input',()=>{ cnt.textContent = body.value.length+' / 1200'; });
+  document.addEventListener('malaragam:lang', () => {
+    const checked = radios.find(item => item.checked);
+    show(checked ? checked.value : '');
+  });
+  body.addEventListener('input', () => {
+    count.textContent = body.value.length + ' / 1200';
+  });
 })();
+
