@@ -1,0 +1,304 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#68112f">
+  <title>Malaragam Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- ADMIN LOGIN -->
+  <main id="loginView" class="login-shell">
+    <section class="login-card" aria-labelledby="loginTitle">
+
+      <a class="brand" href="./index.html" aria-label="Malaragam home">
+        <span class="brand-mark">M</span>
+        <span>Malaragam</span>
+      </a>
+
+      <p class="eyebrow">PRIVATE MANAGEMENT PORTAL</p>
+      <h1 id="loginTitle">Welcome back</h1>
+      <p class="muted">Sign in with your authorised administrator account.</p>
+
+      <form id="loginForm">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email"
+          autocomplete="username" required placeholder="admin@example.com">
+
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" name="password" type="password"
+            autocomplete="current-password" required placeholder="Enter your password">
+          <button id="togglePassword" class="eye-button"
+            type="button" aria-label="Show password">Show</button>
+        </div>
+
+        <button id="loginButton" class="primary-button" type="submit">
+          Sign in securely
+        </button>
+
+        <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
+      </form>
+
+      <button id="forgotPasswordButton" class="text-button" type="button">
+        Forgot password?
+      </button>
+
+      <a class="back-link" href="./index.html">← Back to Malaragam website</a>
+
+      <p class="security-note">
+        Administrator access is verified by Supabase Authentication
+        and the Malaragam admin registry.
+      </p>
+    </section>
+  </main>
+
+  <!-- PASSWORD RECOVERY -->
+  <main id="recoveryView" class="login-shell" hidden>
+    <section class="login-card">
+
+      <a class="brand" href="./index.html" aria-label="Malaragam home">
+        <span class="brand-mark">M</span>
+        <span>Malaragam</span>
+      </a>
+
+      <p class="eyebrow">ACCOUNT SECURITY</p>
+      <h1>Reset your password</h1>
+      <p class="muted">Choose a new password for your administrator account.</p>
+
+      <form id="recoveryForm">
+        <label for="newPassword">New password</label>
+        <div class="password-wrap">
+          <input id="newPassword" type="password"
+            autocomplete="new-password" minlength="8"
+            required placeholder="Enter new password">
+          <button id="toggleNewPassword" class="eye-button"
+            type="button">Show</button>
+        </div>
+
+        <label for="confirmPassword">Confirm new password</label>
+        <input id="confirmPassword" type="password"
+          autocomplete="new-password" minlength="8"
+          required placeholder="Confirm new password">
+
+        <button id="resetPasswordButton" class="primary-button" type="submit">
+          Save new password
+        </button>
+
+        <p id="recoveryMessage" class="message"
+          role="status" aria-live="polite"></p>
+      </form>
+
+      <a class="back-link" href="./admin.html">← Back to Admin Login</a>
+
+      <p class="security-note">
+        Your password is securely managed by Supabase Authentication.
+      </p>
+    </section>
+  </main>
+
+  <!-- ADMIN DASHBOARD -->
+  <main id="dashboardView" class="dashboard-shell" hidden>
+    <aside class="sidebar">
+      <a class="brand sidebar-brand" href="./index.html">
+        <span class="brand-mark">M</span>
+        <span>Malaragam</span>
+      </a>
+
+      <p class="sidebar-label">MANAGEMENT</p>
+
+      <nav id="adminNav" class="admin-nav" aria-label="Admin sections">
+        <button class="nav-item active" data-section="overview">▦ <span>Overview</span></button>
+        <button class="nav-item" data-section="bookings">▣ <span>Bookings</span></button>
+        <button class="nav-item" data-section="payments">₹ <span>Payments</span></button>
+        <button class="nav-item" data-section="guests">♙ <span>Guests</span></button>
+        <button class="nav-item" data-section="reviews">☆ <span>Reviews</span></button>
+        <button class="nav-item" data-section="admins" id="adminsNav" hidden>♧ <span>Admin accounts</span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="./index.html">View public website ↗</a>
+        <button id="signOutButton" class="signout-button">Sign out</button>
+      </div>
+    </aside>
+
+    <section class="main-panel">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">MALARAGAM HOMESTAY</p>
+          <h1 id="sectionTitle">Overview</h1>
+        </div>
+        <div class="profile">
+          <span class="avatar">M</span>
+          <span>
+            <strong id="adminName">Administrator</strong>
+            <small id="adminRole">Admin</small>
+          </span>
+        </div>
+      </header>
+
+      <div id="dashboardMessage" class="dashboard-message"
+        role="status" aria-live="polite"></div>
+
+      <section id="overviewSection" class="content-section">
+        <div class="welcome-panel">
+          <div>
+            <p class="eyebrow">ADMINISTRATION</p>
+            <h2>Your homestay at a glance</h2>
+            <p>Review reservations and keep track of guest activity.</p>
+          </div>
+          <span class="welcome-icon">⌂</span>
+        </div>
+
+        <div class="overview-note">
+          <span class="overview-note-mark">✦</span>
+          <span><strong>Test environment</strong> — payment figures below are Razorpay test transactions, not live revenue.</span>
+        </div>
+
+        <div class="stat-grid">
+          <article class="stat-card stat-card-primary">
+            <span>Total bookings</span>
+            <strong id="statBookings">—</strong>
+            <small>All booking records</small>
+          </article>
+          <article class="stat-card">
+            <span>Awaiting payment</span>
+            <strong id="statPending">—</strong>
+            <small>Active payment holds</small>
+          </article>
+          <article class="stat-card">
+            <span>Confirmed bookings</span>
+            <strong id="statConfirmed">—</strong>
+            <small>Confirmed reservations</small>
+          </article>
+          <article class="stat-card">
+            <span>Expired holds</span>
+            <strong id="statExpired">—</strong>
+            <small>Unpaid holds released</small>
+          </article>
+          <article class="stat-card">
+            <span>Guest records</span>
+            <strong id="statGuests">—</strong>
+            <small>Registered guest profiles</small>
+          </article>
+          <article class="stat-card stat-card-gold">
+            <span>Successful advances</span>
+            <strong id="statAdvance">—</strong>
+            <small>Recorded test payments</small>
+          </article>
+        </div>
+
+        <article class="panel payment-summary-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">PAYMENT SNAPSHOT · TEST MODE</p>
+              <h2>Successful advances this month</h2>
+            </div>
+            <span class="summary-icon">₹</span>
+          </div>
+          <div class="monthly-summary">
+            <strong id="statMonthPayments">—</strong>
+            <p id="monthlyPaymentNote">Based on successful payment records this month.</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">LATEST ACTIVITY</p>
+              <h2>Recent bookings</h2>
+              <p class="panel-subtitle">Guest-friendly reservation overview</p>
+            </div>
+            <button class="text-button" data-goto="bookings">View all</button>
+          </div>
+          <div id="recentBookings" class="table-wrap">
+            <p class="muted">Loading booking records…</p>
+          </div>
+        </article>
+      </section>
+
+      <section id="tableSection" class="content-section" hidden>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">RECORDS</p>
+              <h2 id="tableHeading">Bookings</h2>
+            </div>
+            <button id="refreshButton" class="secondary-button">Refresh</button>
+          </div>
+          <div id="bookingTools" class="booking-tools" hidden>
+            <label class="booking-search-label" for="bookingSearch">Search bookings</label>
+            <input id="bookingSearch" type="search" placeholder="Search by reference, guest name, phone or email">
+            <label for="bookingStatusFilter">Status</label>
+            <select id="bookingStatusFilter">
+              <option value="all">All statuses</option>
+              <option value="pending_payment">Awaiting payment</option>
+              <option value="pending_approval">Pending approval</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="expired">Expired</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <span id="bookingResultCount" class="muted booking-result-count"></span>
+          </div>
+          <div id="paymentTools" class="booking-tools" hidden>
+            <label for="paymentSearch">Search payments</label>
+            <input id="paymentSearch" type="search" placeholder="Search booking reference, guest, phone or payment ID">
+            <label for="paymentStatusFilter">Payment status</label>
+            <select id="paymentStatusFilter">
+              <option value="all">All statuses</option>
+              <option value="success">Successful</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+              <option value="refunded">Refunded</option>
+            </select>
+            <span id="paymentResultCount" class="muted booking-result-count"></span>
+          </div>
+          <div id="tableContent" class="table-wrap"></div>
+        </article>
+      </section>
+
+      <div id="paymentDetailModal" class="booking-modal" hidden>
+        <div class="booking-modal-backdrop" data-close-payment></div>
+        <section class="booking-modal-card" role="dialog" aria-modal="true" aria-labelledby="paymentDetailTitle">
+          <div class="booking-modal-heading">
+            <div><p class="eyebrow">PAYMENT DETAILS</p><h2 id="paymentDetailTitle">Payment details</h2></div>
+            <button type="button" class="modal-close" data-close-payment aria-label="Close">×</button>
+          </div>
+          <div id="paymentDetailContent"></div>
+          <p class="booking-action-note">Payment records are read-only here. Payment status can only be updated through verified Razorpay processing. Pending attempts are not proof of collected money.</p>
+        </section>
+      </div>
+
+      <div id="bookingDetailModal" class="booking-modal" hidden>
+        <div class="booking-modal-backdrop" data-close-booking></div>
+        <section class="booking-modal-card" role="dialog" aria-modal="true" aria-labelledby="bookingDetailTitle">
+          <div class="booking-modal-heading">
+            <div>
+              <p class="eyebrow">RESERVATION DETAILS</p>
+              <h2 id="bookingDetailTitle">Booking details</h2>
+            </div>
+            <button type="button" class="modal-close" data-close-booking aria-label="Close">×</button>
+          </div>
+          <div id="bookingDetailContent"></div>
+          <p class="booking-action-note">Status-changing actions are intentionally unavailable until the secure server-side booking workflow is installed. Payment status can only be changed by verified Razorpay processing.</p>
+        </section>
+      </div>
+
+      <p class="footer-note">Malaragam Admin · Access controlled by Supabase policies</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
+
