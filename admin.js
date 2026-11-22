@@ -40,6 +40,7 @@
 
   let currentSection = 'overview';
   let reviewRows = [];
+  let adminRows = [];
 
   const titles = {
     overview: 'Overview',
@@ -752,7 +753,130 @@
     }
   }
 
+  async function callAdminFunction(functionName, payload = {}) {
+    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    if (sessionError) throw sessionError;
+    const token = sessionData.session?.access_token;
+    if (!token) throw new Error('Your admin session has expired. Please sign in again.');
+
+    const response = await fetch(`${CFG.SUPABASE_URL}/functions/v1/${functionName}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: CFG.SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || `The ${functionName} request failed.`);
+    return result;
+  }
+
+  function renderAdminManagement() {
+    if (!adminRows.length) {
+      $('tableContent').innerHTML = '<p class="muted booking-empty">No administrator accounts were returned.</p>';
+      return;
+    }
+
+    const rows = adminRows.map(admin => {
+      const isPrimary = admin.role === 'primary_admin';
+      const active = admin.is_active === true;
+      const actionButtons = isPrimary
+        ? '<span class="admin-protected-label">Protected account</span>'
+        : `<div class="admin-row-actions">
+            <button type="button" class="secondary-button" data-admin-action="${active ? 'deactivate' : 'activate'}" data-admin-id="${escapeHtml(admin.user_id)}">${active ? 'Deactivate' : 'Activate'}</button>
+            <button type="button" class="admin-delete-button" data-admin-action="delete" data-admin-id="${escapeHtml(admin.user_id)}">Delete</button>
+          </div>`;
+      return `<tr>
+        <td><strong>${escapeHtml(admin.full_name || '—')}</strong></td>
+        <td>${escapeHtml(admin.email || 'Email unavailable')}</td>
+        <td>${isPrimary ? 'Primary Admin' : 'Manager'}</td>
+        <td><span class="status-pill ${active ? 'approved' : 'rejected'}">${active ? 'Active' : 'Inactive'}</span></td>
+        <td>${escapeHtml(formatDate(admin.created_at))}</td>
+        <td>${actionButtons}</td>
+      </tr>`;
+    }).join('');
+
+    $('tableContent').innerHTML = `<div class="table-wrap"><table class="admin-management-table">
+      <thead><tr><th>Full name</th><th>Email</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+  }
+
+  async function loadAdminManagement() {
+    $('tableHeading').textContent = 'Admin accounts';
+    $('adminTools').hidden = false;
+    $('tableContent').innerHTML = '<p class="muted">Loading administrator accounts…</p>';
+    const result = await callAdminFunction('list-admins');
+    adminRows = Array.isArray(result.admins) ? result.admins : [];
+    renderAdminManagement();
+    setDashboardMessage(`${adminRows.length} administrator account(s) loaded. Only the Primary Admin can manage accounts.`);
+  }
+
+  async function submitManagerInvitation(event) {
+    event.preventDefault();
+    const button = $('adminInviteButton');
+    const message = $('adminInviteMessage');
+    const fullName = $('adminFullName').value.trim();
+    const email = $('adminEmail').value.trim();
+    message.textContent = '';
+    message.classList.remove('error', 'success');
+    button.disabled = true;
+    button.textContent = 'Sending invitation…';
+
+    try {
+      const result = await callAdminFunction('create-admin', {
+        full_name: fullName,
+        email
+      });
+      message.textContent = result.message || 'Manager invitation sent.';
+      message.classList.add('success');
+      $('adminInviteForm').reset();
+      await loadAdminManagement();
+    } catch (error) {
+      message.textContent = error.message || 'Could not invite this manager.';
+      message.classList.add('error');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Send manager invitation';
+    }
+  }
+
+  async function manageManagerAccount(userId, action, button) {
+    const labels = { activate: 'activate', deactivate: 'deactivate', delete: 'permanently delete' };
+    if (!labels[action]) return;
+    const warning = action === 'delete'
+      ? 'This permanently removes the manager from the admin registry and Supabase Authentication. Continue?'
+      : `Are you sure you want to ${labels[action]} this manager?`;
+    if (!window.confirm(warning)) return;
+
+    button.disabled = true;
+    const originalText = button.textContent;
+    button.textContent = 'Please wait…';
+    try {
+      const result = await callAdminFunction('manage-admin', {
+        user_id: userId,
+        action
+      });
+      setDashboardMessage(result.message || 'Manager account updated.');
+      await loadAdminManagement();
+    } catch (error) {
+      setDashboardMessage(error.message || 'Could not update this manager.', true);
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+
   async function loadTable(section) {
+    if (section !== 'admins') $('adminTools').hidden = true;
+    if (section === 'admins') {
+      $('bookingTools').hidden = true;
+      $('paymentTools').hidden = true;
+      $('guestTools').hidden = true;
+      $('reviewTools').hidden = true;
+      await loadAdminManagement();
+      return;
+    }
     if (section === 'reviews') {
       $('bookingTools').hidden = true;
       $('paymentTools').hidden = true;
@@ -1044,12 +1168,15 @@
   $('guestSearch').addEventListener('input', renderGuestManagement);
   $('reviewSearch').addEventListener('input', renderReviewManagement);
   $('reviewStatusFilter').addEventListener('change', renderReviewManagement);
+  $('adminInviteForm').addEventListener('submit', submitManagerInvitation);
   $('bookingSearch').addEventListener('input', renderBookingManagement);
   $('bookingStatusFilter').addEventListener('change', renderBookingManagement);
 
   $('tableContent').addEventListener('click', event => {
     const reviewButton = event.target.closest('[data-review-action][data-review-id]');
     if (reviewButton) { moderateReview(reviewButton.dataset.reviewId, reviewButton.dataset.reviewAction, reviewButton); return; }
+    const adminButton = event.target.closest('[data-admin-action][data-admin-id]');
+    if (adminButton) { manageManagerAccount(adminButton.dataset.adminId, adminButton.dataset.adminAction, adminButton); return; }
     const paymentButton = event.target.closest('[data-payment-id]');
     if (paymentButton) { openPaymentDetails(paymentButton.dataset.paymentId); return; }
     const guestButton = event.target.closest('[data-guest-id]');
