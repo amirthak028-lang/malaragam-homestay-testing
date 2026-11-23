@@ -119,6 +119,7 @@
         <button class="nav-item" data-section="payments">₹ <span>Payments</span></button>
         <button class="nav-item" data-section="guests">♙ <span>Guests</span></button>
         <button class="nav-item" data-section="reviews">☆ <span>Reviews</span></button>
+        <button class="nav-item" data-section="cancellations">↶ <span>Cancellations</span></button>
         <button class="nav-item" data-section="admins" id="adminsNav" hidden>♧ <span>Admin accounts</span></button>
       </nav>
 
@@ -265,6 +266,21 @@
             <input id="guestSearch" type="search" placeholder="Search name, mobile, email or booking reference">
             <span id="guestResultCount" class="muted booking-result-count"></span>
           </div>
+          <div id="cancellationTools" class="booking-tools review-tools" hidden>
+            <label for="cancellationSearch">Search cancellation requests</label>
+            <input id="cancellationSearch" type="search" placeholder="Search booking reference, guest or request ID">
+            <label for="cancellationStatusFilter">Request status</label>
+            <select id="cancellationStatusFilter">
+              <option value="all">All requests</option>
+              <option value="pending">Pending review</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="refund_pending">Refund pending</option>
+              <option value="refunded">Refunded</option>
+              <option value="closed">Closed</option>
+            </select>
+            <span id="cancellationResultCount" class="muted booking-result-count"></span>
+          </div>
           <div id="reviewTools" class="booking-tools review-tools" hidden>
             <label for="reviewSearch">Search reviews</label>
             <input id="reviewSearch" type="search" placeholder="Search guest name or review text">
@@ -347,3 +363,4 @@
   <script src="admin.js"></script>
 </body>
 </html>
+
