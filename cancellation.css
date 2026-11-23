@@ -1,0 +1,37 @@
+/* Dedicated cancellation page — shares Malaragam's existing design tokens. */
+.cancel-page{background:var(--kolam);color:var(--teak)}
+.cancel-main{min-height:70vh}
+.cancel-hero{background:var(--kumkum);color:var(--kolam);padding:clamp(44px,7vw,78px) var(--gutter) 56px;text-align:center}
+.cancel-hero h1{font:700 clamp(2.6rem,6vw,4.6rem)/1.05 var(--display);margin:10px 0 16px}
+.cancel-hero>p:not(.cancel-eyebrow){max-width:650px;margin:0 auto;color:#f0e6dc;font-size:1.08rem}
+.cancel-eyebrow,.cancel-step{font-size:.76rem;letter-spacing:.16em;font-weight:700;color:var(--manjal)}
+.cancel-rule{width:72px;height:3px;background:var(--manjal);margin:28px auto 0}
+.cancel-layout{width:min(1120px,calc(100% - 2*var(--gutter)));margin:-1px auto 72px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:24px;align-items:start;padding-top:34px}
+.cancel-card{background:#fffdfa;border:1px solid var(--sandal);border-radius:18px;padding:clamp(22px,3vw,36px);box-shadow:0 14px 40px rgba(54,32,20,.06)}
+.cancel-card h2{font:700 clamp(1.8rem,3vw,2.45rem)/1.1 var(--display);margin:10px 0}
+.cancel-card-heading>p,.policy-intro{color:var(--muted);margin-bottom:22px}
+.cancel-notice{display:grid;gap:5px;background:#f8f0df;border:1px solid #ead8b5;border-radius:10px;padding:14px 16px;margin:20px 0;color:#6d542b;font-size:.94rem}
+#cancellationForm{display:grid;gap:10px}
+#cancellationForm>label:not(.cancel-check){font-weight:600;margin-top:8px}
+#cancellationForm input:not([type=checkbox]),#cancellationForm textarea{width:100%;border:1px solid var(--sandal);border-radius:9px;background:#fff;padding:13px 14px;font:inherit;color:var(--teak);box-sizing:border-box}
+#cancellationForm input:focus,#cancellationForm textarea:focus{outline:2px solid var(--manjal);outline-offset:2px}
+#cancellationForm textarea{resize:vertical}
+.optional{font-weight:400;color:var(--muted);font-size:.9rem}
+.cancel-policy-mini{background:#f7f3ed;border-left:3px solid var(--manjal);padding:13px 15px;margin-top:12px}
+.cancel-policy-mini p{font-size:.92rem;color:var(--muted);margin-top:4px}
+.cancel-check{display:flex;align-items:flex-start;gap:10px;margin:8px 0 4px;font-size:.93rem}
+.cancel-check input{margin-top:5px;accent-color:var(--kumkum)}
+.cancel-submit{width:100%;justify-content:center;min-height:52px}
+.cancel-submit:disabled{opacity:.55;cursor:not-allowed}
+.cancel-message{font-size:.9rem;color:var(--muted);text-align:center;margin-top:4px}
+.cancel-policy{position:sticky;top:100px}
+.policy-intro{margin-top:8px}
+.policy-row{display:grid;gap:5px;padding:16px 0;border-top:1px solid var(--sandal)}
+.policy-row strong{font-size:1rem;color:var(--teak)}
+.policy-row span{font-size:.95rem;color:var(--muted)}
+.policy-footnote{font-size:.86rem;color:var(--muted);border-top:1px solid var(--sandal);padding-top:16px;margin-top:4px}
+.cancel-help{display:grid;gap:8px;background:#f7f3ed;padding:16px;border-radius:10px;margin-top:22px}
+.cancel-help a{color:var(--kumkum);overflow-wrap:anywhere}
+.cancel-footer{margin-top:0}
+@media(max-width:820px){.cancel-layout{grid-template-columns:1fr}.cancel-policy{position:static}}
+@media(max-width:600px){.cancel-hero{padding:42px 20px}.cancel-layout{width:calc(100% - 28px);margin-bottom:44px;padding-top:22px}.cancel-card{padding:20px;border-radius:14px}.cancel-hero h1{font-size:2.7rem}}

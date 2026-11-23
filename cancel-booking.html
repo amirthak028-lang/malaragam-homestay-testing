@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6e1130">
+  <meta name="description" content="Submit a Malaragam Homestay booking cancellation request.">
+  <title>Cancel Booking | Malaragam Homestay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Hind+Madurai:wght@400;500;600&family=Noto+Serif+Tamil:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="cancellation.css">
+</head>
+<body class="cancel-page">
+<header class="site-header">
+  <a class="brand" href="index.html#top" aria-label="Malaragam home"><span class="brand-mark" aria-hidden="true">ம</span><span class="brand-name">Malaragam</span></a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="index.html#about">About</a>
+    <a href="index.html#rooms">Home</a>
+    <a href="index.html#tariff">Pricing</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <div class="header-tools"><a class="btn btn-gold btn-sm" href="index.html#booking">Book your stay</a></div>
+</header>
+
+<main id="main" class="cancel-main">
+  <section class="cancel-hero">
+    <p class="cancel-eyebrow">MALARAGAM HOMESTAY · GUEST SUPPORT</p>
+    <h1>Cancellation request</h1>
+    <p>We're sorry your plans may have changed. Enter your booking details below to request a cancellation.</p>
+    <div class="cancel-rule" aria-hidden="true"></div>
+  </section>
+
+  <section class="cancel-layout" aria-label="Cancellation form and policy">
+    <div class="cancel-card">
+      <div class="cancel-card-heading">
+        <span class="cancel-step">01 · VERIFY YOUR BOOKING</span>
+        <h2>Find your reservation</h2>
+        <p>Use the booking reference and the email address you provided when booking.</p>
+      </div>
+
+      <div class="cancel-notice" role="note">
+        <strong>Secure request process</strong>
+        <span>Your details will be checked securely by Malaragam's booking system. We won't show booking information unless the details match.</span>
+      </div>
+
+      <form id="cancellationForm" novalidate>
+        <label for="bookingReference">Booking reference</label>
+        <input id="bookingReference" name="booking_reference" type="text" maxlength="32" placeholder="Example: MAL022" autocomplete="off" required>
+        <label for="registeredEmail">Registered email address</label>
+        <input id="registeredEmail" name="email" type="email" maxlength="254" placeholder="Email used for your booking" autocomplete="email" required>
+        <label for="cancellationReason">Reason for cancellation <span class="optional">(optional)</span></label>
+        <textarea id="cancellationReason" name="reason" rows="3" maxlength="1000" placeholder="Tell us briefly why you need to cancel"></textarea>
+
+        <div class="cancel-policy-mini">
+          <strong>Before you continue</strong>
+          <p>Submitting this form sends a cancellation request to Malaragam. It does not cancel your booking immediately. Your request remains pending until reviewed by the homestay.</p>
+        </div>
+
+        <label class="cancel-check">
+          <input id="policyAcknowledged" type="checkbox" required>
+          <span>I have read and understood the cancellation and refund policy below.</span>
+        </label>
+
+        <button class="btn btn-maroon cancel-submit" id="submitCancellation" type="submit" disabled>Cancellation service setup in progress</button>
+        <p id="cancelMessage" class="cancel-message" role="status" aria-live="polite">Online cancellation requests will be enabled after the secure verification service is connected. Please contact us for urgent help.</p>
+      </form>
+    </div>
+
+    <aside class="cancel-card cancel-policy">
+      <span class="cancel-step">02 · REFUND POLICY</span>
+      <h2>Cancellation &amp; refunds</h2>
+      <p class="policy-intro">The advance payment refund depends on when the cancellation request is received.</p>
+      <div class="policy-row"><strong>48 hours or more before check-in</strong><span>100% of the advance payment is eligible for refund.</span></div>
+      <div class="policy-row"><strong>Less than 48 hours before check-in</strong><span>No advance refund.</span></div>
+      <div class="policy-row"><strong>No-show</strong><span>No refund.</span></div>
+      <div class="policy-row"><strong>Cancellation by Malaragam</strong><span>100% of the advance payment is eligible for refund.</span></div>
+      <div class="policy-row"><strong>Booking not approved by Malaragam</strong><span>Full advance payment refund.</span></div>
+      <p class="policy-footnote">The request timestamp is used to assess the 48-hour deadline. Approved refunds are returned through the original payment method. Bank and payment-provider processing times may vary.</p>
+      <div class="cancel-help">
+        <strong>Need help?</strong>
+        <a href="tel:+917708896936">+91 77088 96936</a>
+        <a href="mailto:malaragamhomestay@gmail.com">malaragamhomestay@gmail.com</a>
+        <a href="https://wa.me/917708896936" target="_blank" rel="noopener">Contact us on WhatsApp</a>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer class="site-footer cancel-footer">
+  <div><span class="brand-mark" aria-hidden="true">ம</span><strong>Malaragam Homestay</strong></div>
+  <p>Rooted in tradition, designed for comfort.</p>
+  <a class="foot-mail" href="index.html">Return to Malaragam website</a>
+  <small>© <span id="year"></span> Malaragam Homestay, Mayiladuthurai</small>
+</footer>
+<script src="config.js"></script>
+<script src="cancellation.js"></script>
+</body>
+</html>
