@@ -41,6 +41,7 @@
   let currentSection = 'overview';
   let reviewRows = [];
   let adminRows = [];
+  let cancellationRows = [];
 
   const titles = {
     overview: 'Overview',
@@ -48,6 +49,7 @@
     payments: 'Payments',
     guests: 'Guests',
     reviews: 'Reviews',
+    cancellations: 'Cancellation requests',
     admins: 'Admin accounts'
   };
 
@@ -867,8 +869,114 @@
     }
   }
 
+
+  function renderCancellationManagement() {
+    const search = ($('cancellationSearch')?.value || '').trim().toLowerCase();
+    const status = $('cancellationStatusFilter')?.value || 'all';
+    const filtered = cancellationRows.filter(item => {
+      const booking = item.booking || {};
+      const guest = item.guest || {};
+      const haystack = [
+        item.id, booking.booking_reference, guest.full_name,
+        guest.email, guest.mobile, item.reason
+      ].join(' ').toLowerCase();
+      return (!search || haystack.includes(search)) &&
+        (status === 'all' || item.status === status);
+    });
+
+    $('cancellationResultCount').textContent =
+      `${filtered.length} of ${cancellationRows.length} requests`;
+
+    if (!filtered.length) {
+      $('tableContent').innerHTML =
+        '<p class="muted booking-empty">No cancellation requests match your search or filter.</p>';
+      return;
+    }
+
+    const rows = filtered.map(item => {
+      const booking = item.booking || {};
+      const guest = item.guest || {};
+      const eligible = item.eligible_for_refund === true;
+      return `<tr>
+        <td><strong class="booking-reference">${escapeHtml(booking.booking_reference || '—')}</strong>
+          <small class="booking-subline">${escapeHtml(item.id)}</small></td>
+        <td><strong>${escapeHtml(guest.full_name || 'Guest')}</strong>
+          <small class="booking-subline">${escapeHtml(guest.email || guest.mobile || 'Contact unavailable')}</small></td>
+        <td>${escapeHtml(formatDate(booking.check_in))}</td>
+        <td><span class="status-pill ${statusClass(item.status)}">${escapeHtml(item.status || 'unknown')}</span></td>
+        <td><span class="status-pill ${eligible ? 'approved' : 'rejected'}">${eligible ? 'Eligible' : 'Not eligible'}</span></td>
+        <td><strong>${escapeHtml(formatCurrency(item.refund_amount))}</strong></td>
+        <td>${escapeHtml(formatDate(item.requested_at))}</td>
+      </tr>`;
+    }).join('');
+
+    $('tableContent').innerHTML = `
+      <div class="cancellation-readonly-note">
+        Requests are displayed for review. Approval, rejection and refunds must be performed by a secure server-side admin function.
+      </div>
+      <table class="booking-management-table cancellation-management-table">
+        <thead><tr>
+          <th>Booking / Request</th><th>Guest</th><th>Check-in</th>
+          <th>Request status</th><th>Refund eligibility</th><th>Refund amount</th><th>Requested</th>
+        </tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  async function loadCancellationManagement() {
+    $('tableHeading').textContent = 'Cancellation requests';
+    $('cancellationTools').hidden = false;
+    $('tableContent').innerHTML = '<p class="muted">Loading cancellation requests…</p>';
+
+    const { data: requests, error } = await client
+      .from('booking_cancellation_requests')
+      .select('id,booking_id,reason,status,requested_at,eligible_for_refund,refund_amount,policy_rule,admin_note,decision_at,refund_status')
+      .order('requested_at', { ascending: false })
+      .limit(500);
+
+    if (error) throw new Error('Could not load cancellation requests: ' + error.message);
+
+    const bookingIds = [...new Set((requests || []).map(row => row.booking_id).filter(Boolean))];
+    let bookings = [];
+    if (bookingIds.length) {
+      const result = await client.from('bookings')
+        .select('id,booking_reference,guest_id,check_in,check_out,status,advance_amount,total_amount')
+        .in('id', bookingIds);
+      if (result.error) throw new Error('Could not load cancellation booking details: ' + result.error.message);
+      bookings = result.data || [];
+    }
+
+    const guestIds = [...new Set(bookings.map(row => row.guest_id).filter(Boolean))];
+    let guests = [];
+    if (guestIds.length) {
+      const result = await client.from('guests')
+        .select('id,full_name,email,mobile')
+        .in('id', guestIds);
+      if (result.error) throw new Error('Could not load cancellation guest details: ' + result.error.message);
+      guests = result.data || [];
+    }
+
+    const bookingMap = new Map(bookings.map(row => [row.id, row]));
+    const guestMap = new Map(guests.map(row => [row.id, row]));
+    cancellationRows = (requests || []).map(row => {
+      const booking = bookingMap.get(row.booking_id) || {};
+      return { ...row, booking, guest: guestMap.get(booking.guest_id) || {} };
+    });
+
+    renderCancellationManagement();
+    const pending = cancellationRows.filter(row => row.status === 'pending').length;
+    setDashboardMessage(`${cancellationRows.length} cancellation request(s) loaded · ${pending} awaiting review.`);
+  }
+
   async function loadTable(section) {
     if (section !== 'admins') $('adminTools').hidden = true;
+    if (section !== 'cancellations') $('cancellationTools').hidden = true;
+    if (section === 'cancellations') {
+      $('bookingTools').hidden = true;
+      $('paymentTools').hidden = true;
+      $('guestTools').hidden = true;
+      $('reviewTools').hidden = true;
+      await loadCancellationManagement();
+      return;
+    }
     if (section === 'admins') {
       $('bookingTools').hidden = true;
       $('paymentTools').hidden = true;
@@ -1168,6 +1276,8 @@
   $('guestSearch').addEventListener('input', renderGuestManagement);
   $('reviewSearch').addEventListener('input', renderReviewManagement);
   $('reviewStatusFilter').addEventListener('change', renderReviewManagement);
+  $('cancellationSearch').addEventListener('input', renderCancellationManagement);
+  $('cancellationStatusFilter').addEventListener('change', renderCancellationManagement);
   $('adminInviteForm').addEventListener('submit', submitManagerInvitation);
   $('bookingSearch').addEventListener('input', renderBookingManagement);
   $('bookingStatusFilter').addEventListener('change', renderBookingManagement);
