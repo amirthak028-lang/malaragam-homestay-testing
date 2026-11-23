@@ -176,3 +176,13 @@ body.modal-open{overflow:hidden}
 .admin-protected-label{color:var(--muted);font-size:11px;font-weight:700}
 @media(max-width:700px){.admin-invite-panel{grid-template-columns:1fr}.admin-invite-form .primary-button{max-width:none}}
 
+
+
+/* Cancellation request management — read-only until secure decision function is deployed */
+.cancellation-management-table{min-width:1050px}
+.cancellation-management-table td{vertical-align:middle}
+.cancellation-readonly-note{
+  margin:0 0 15px;padding:12px 14px;border:1px solid #ead9b7;
+  border-radius:9px;background:#fbf3df;color:#715321;
+  font-size:11px;line-height:1.6
+}
