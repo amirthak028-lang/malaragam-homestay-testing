@@ -778,3 +778,177 @@ html[lang="ta"] .faq summary{font-size:1.05rem;font-weight:700}
 @media(prefers-reduced-motion:reduce){.walkthrough-scroll-hint{animation:none}.walkthrough-photo img{transition:none}}
 
 
+
+
+/* Final mobile polish: homepage hero and stay estimator */
+@media (max-width: 620px) {
+  .hero {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    padding: 34px 24px 42px;
+    overflow: hidden;
+  }
+  .hero-copy {
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    min-width: 0;
+  }
+  .hero-copy::before { right: 2%; top: -10px; }
+  .hero-place {
+    justify-content: center;
+    gap: 9px;
+    margin: 0 0 18px;
+    font-size: .88rem;
+    text-align: center;
+  }
+  .hero-place::before,
+  .hero-place::after {
+    flex: 0 1 30px;
+    width: 30px;
+  }
+  .hero h1 {
+    max-width: 11ch;
+    margin-inline: auto;
+    font-size: clamp(2.65rem, 12vw, 3.65rem);
+    line-height: 1.02;
+    letter-spacing: -.025em;
+    text-align: left;
+    overflow-wrap: normal;
+  }
+  .hero-lead {
+    max-width: 100%;
+    margin-top: 18px;
+    font-size: 1.13rem;
+    line-height: 1.55;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 11px;
+    margin-top: 23px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    min-height: 52px;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+    margin-top: 23px;
+    font-size: .9rem;
+  }
+  .hero-facts li:last-child { grid-column: 1 / -1; }
+  .hero-stage-wrap {
+    justify-self: center;
+    width: min(82vw, 340px);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .door-stage {
+    width: 100%;
+    border-width: 6px;
+  }
+  .door-toggle {
+    display: block;
+    margin: 13px auto 0;
+  }
+
+  .estimator {
+    width: 100%;
+    min-width: 0;
+    margin-top: 32px;
+    padding: 20px 18px 22px;
+    gap: 17px;
+    border-top-width: 5px;
+    box-sizing: border-box;
+  }
+  .estimator h3 {
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.2;
+  }
+  .est-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    align-items: stretch;
+    min-width: 0;
+  }
+  .stepper {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) 46px;
+    width: min(100%, 260px);
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+  .stepper button { width: 100%; height: 46px; }
+  .stepper output { min-width: 0; align-self: center; }
+  .seg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .seg label { min-width: 0; }
+  .seg span {
+    min-height: 58px;
+    height: 100%;
+    padding: 11px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    box-sizing: border-box;
+  }
+  .est-beds {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+  }
+  .est-beds select {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+  .est-result {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 17px 12px;
+    min-width: 0;
+  }
+  .est-result div {
+    min-width: 0;
+    gap: 5px;
+  }
+  .est-result span {
+    font-size: .88rem;
+    line-height: 1.3;
+  }
+  .est-result strong {
+    font-size: clamp(1.8rem, 8vw, 2.35rem);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+  .est-result .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 54px;
+    margin: 2px 0 0;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+}
+
+
+
