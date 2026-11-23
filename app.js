@@ -1,4 +1,3 @@
-
 (function(){
 'use strict';
 const CFG = window.MALARAGAM_CONFIG;
@@ -590,6 +589,7 @@ async function startPayment(){
       check_out:el.outD.value,
       adults:+el.adults.value,
       children:+el.children.value,
+      extra_beds:+el.beds.value,
       package_type:pkg(),
       full_name:el.name.value.trim(),
       mobile:el.phone.value.trim(),
@@ -864,4 +864,5 @@ refresh();
     gallery.style.setProperty("--lamp-y", "35%");
   }, {passive:true});
 })();
+
 
