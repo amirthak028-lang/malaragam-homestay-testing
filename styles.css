@@ -952,3 +952,166 @@ html[lang="ta"] .faq summary{font-size:1.05rem;font-weight:700}
 
 
 
+/* =========================================
+   MALARAGAM - MOBILE EXPERIENCE POLISH
+   Desktop design remains unchanged
+========================================= */
+
+@media (max-width: 620px) {
+
+  /* Header and navigation */
+  .site-header {
+    min-height: 64px;
+    gap: 10px;
+    padding: 10px 16px;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .brand-mark {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    white-space: nowrap;
+  }
+
+  .header-tools {
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+
+  .lang-toggle,
+  .menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav {
+    max-height: min(72vh, 560px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .nav a {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Better mobile spacing */
+  .section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  /* Comfortable touch targets */
+  .btn {
+    min-height: 46px;
+  }
+
+  .btn-sm {
+    min-height: 44px;
+  }
+
+  button,
+  select {
+    touch-action: manipulation;
+  }
+
+  /* Mobile-friendly form fields */
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  /* Contact actions */
+  .contact-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-actions .btn {
+    width: 100%;
+  }
+
+  /* Map */
+  .map-frame {
+    min-height: 280px;
+  }
+
+  .map-frame iframe {
+    min-height: 268px;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 26px 18px;
+  }
+
+  .site-footer > * {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  /* WhatsApp floating button */
+  .wa-float {
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 380px) {
+
+  .site-header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .brand-name {
+    font-size: 1.08rem;
+  }
+
+  .lang-toggle {
+    padding: .35em .5em;
+    font-size: .88rem;
+  }
+
+  .section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .hero {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.35rem, 11vw, 2.8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    scroll-behavior: auto;
+  }
+}
+
+
+
