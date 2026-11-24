@@ -431,7 +431,8 @@ function updateWhatsApp(){
 }
 
 /* availability */
-let booked = [], wantNights = 1;
+let booked = [], wantNights = 1, availabilityLoaded = false;
+
 
 async function loadAvailability(){
   if(!live) return;
@@ -445,10 +446,17 @@ async function loadAvailability(){
       },
       body:'{}'
     });
-    if(r.ok) booked = await r.json();
-  }catch(e){
-    /* the server re-checks on booking, so a failure here is not fatal */
-  }
+    if(!r.ok) throw new Error('Availability check failed');
+
+const data = await r.json();
+if(!Array.isArray(data)) throw new Error('Invalid availability response');
+
+booked = data;
+availabilityLoaded = true;
+ }catch(e){
+  availabilityLoaded = false;
+  console.error('Availability loading failed:', e);
+}
 }
 
 function rangeIsFree(){
@@ -456,24 +464,22 @@ function rangeIsFree(){
   return !booked.some(x => a < x.check_out && b > x.check_in);
 }
 
-function checkDates(){
-  el.avail.className = 'inline-msg';
-  el.avail.textContent = '';
-  if(!el.inD.value || !el.outD.value) return true;
-  if(nightsCount()<1){
-    el.avail.className='inline-msg err';
-    el.avail.textContent = t('badRange');
+if(live){
+  if(!availabilityLoaded){
+    el.avail.className = 'inline-msg err';
+    el.avail.textContent = 'Unable to check availability. Please try again.';
     return false;
   }
-  if(live){
-    if(!rangeIsFree()){
-      el.avail.className='inline-msg err';
-      el.avail.textContent = t('booked');
-      return false;
-    }
-    el.avail.className='inline-msg ok';
-    el.avail.textContent = t('available');
+
+  if(!rangeIsFree()){
+    el.avail.className = 'inline-msg err';
+    el.avail.textContent = t('booked');
+    return false;
   }
+
+  el.avail.className = 'inline-msg ok';
+  el.avail.textContent = t('available');
+}
   return true;
 }
 
@@ -870,5 +876,3 @@ refresh();
     gallery.style.setProperty("--lamp-y", "35%");
   }, {passive:true});
 })();
-
-
