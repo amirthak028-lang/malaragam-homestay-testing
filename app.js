@@ -519,7 +519,8 @@ function validate(){
   if(nightsCount()<1) return t('badRange');
   if(+el.adults.value<1) return t('needAdult');
   if(+el.adults.value + +el.children.value > CFG.MAX_GUESTS) return t('guestCap',{n:CFG.MAX_GUESTS});
-  if(live && !rangeIsFree()) return t('booked');
+  if(live && !availabilityLoaded) return 'Unable to check availability. Please try again.';
+if(live && !rangeIsFree()) return t('booked');
   if(el.name.value.trim().length<2) return t('needName');
   if(el.phone.value.replace(/\D/g,'').length<10) return t('needPhone');
   if(live && !/^\S+@\S+\.\S+$/.test(el.email.value)) return t('needEmail');
