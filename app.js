@@ -463,6 +463,7 @@ function rangeIsFree(){
   const a = el.inD.value, b = el.outD.value;
   return !booked.some(x => a < x.check_out && b > x.check_in);
 }
+  function checkDates(){
 
 if(live){
   if(!availabilityLoaded){
