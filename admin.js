@@ -1,4 +1,3 @@
-
 (() => {
   'use strict';
 
@@ -42,6 +41,7 @@
   let reviewRows = [];
   let adminRows = [];
   let cancellationRows = [];
+let currentAdminRole = null;
 
   const titles = {
     overview: 'Overview',
@@ -906,12 +906,14 @@
         <td><span class="status-pill ${statusClass(item.status)}">${escapeHtml(item.status || 'unknown')}</span></td>
         <td><span class="status-pill ${eligible ? 'approved' : 'rejected'}">${eligible ? 'Eligible' : 'Not eligible'}</span></td>
         <td><strong>${escapeHtml(formatCurrency(item.refund_amount))}</strong></td>
-        <td>${escapeHtml(formatDate(item.requested_at))}</td>
         <td>${item.status === 'pending' ? `
-          <div class="cancellation-row-actions">
-            <button type="button" class="secondary-button" data-cancellation-action="approved" data-cancellation-id="${escapeHtml(item.id)}">Approve</button>
-            <button type="button" class="admin-delete-button" data-cancellation-action="rejected" data-cancellation-id="${escapeHtml(item.id)}">Reject</button>
-          </div>` : `<span class="muted">Decision recorded</span>`}</td>
+  <div class="cancellation-row-actions">
+    <button type="button" class="secondary-button" data-cancellation-action="approved" data-cancellation-id="${escapeHtml(item.id)}">Approve</button>
+    <button type="button" class="admin-delete-button" data-cancellation-action="rejected" data-cancellation-id="${escapeHtml(item.id)}">Reject</button>
+  </div>` : (item.status === 'approved' && eligible && item.refund_status !== 'refunded' && currentAdminRole === 'primary_admin') ? `
+  <div class="cancellation-row-actions">
+    <button type="button" class="secondary-button" data-refund-request-id="${escapeHtml(item.id)}">Process Refund</button>
+  </div>` : `<span class="muted">${escapeHtml(item.refund_status === 'refunded' ? 'Refund completed' : 'Decision recorded')}</span>`}</td>
       </tr>`;
     }).join('');
 
@@ -951,7 +953,54 @@
     }
   }
 
-  async function loadCancellationManagement() {
+  async function processCancellationRefund(requestId, button) {
+  const request = cancellationRows.find(item => item.id === requestId);
+
+  if (!request) {
+    setDashboardMessage('Cancellation request not found. Refresh and try again.', true);
+    return;
+  }
+
+  if (currentAdminRole !== 'primary_admin') {
+    setDashboardMessage('Only the Primary Admin can process refunds.', true);
+    return;
+  }
+
+  if (request.status !== 'approved' || request.eligible_for_refund !== true) {
+    setDashboardMessage('This request is not approved and eligible for a refund.', true);
+    return;
+  }
+
+  if (!window.confirm(
+    `Process the eligible refund of ${formatCurrency(request.refund_amount)} for this cancellation?`
+  )) return;
+
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Processing…';
+
+  try {
+    const result = await callAdminFunction('admin-process-refund', {
+      request_id: requestId
+    });
+
+    setDashboardMessage(
+      result.message || 'Refund request sent to the payment provider.'
+    );
+
+    await loadCancellationManagement();
+
+  } catch (error) {
+    setDashboardMessage(
+      error.message || 'Could not process the refund. Check its status before retrying.',
+      true
+    );
+
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
+async function loadCancellationManagement() {
     $('tableHeading').textContent = 'Cancellation requests';
     $('cancellationTools').hidden = false;
     $('tableContent').innerHTML = '<p class="muted">Loading cancellation requests…</p>';
@@ -1112,6 +1161,7 @@
 
     try {
       const admin = await getAdmin(session.user);
+      currentAdminRole = admin.role;
 
       $('adminName').textContent =
         admin.full_name || session.user.email || 'Administrator';
@@ -1313,6 +1363,14 @@
   $('bookingStatusFilter').addEventListener('change', renderBookingManagement);
 
   $('tableContent').addEventListener('click', event => {
+        const refundButton = event.target.closest('[data-refund-request-id]');
+    if (refundButton) {
+      processCancellationRefund(
+        refundButton.dataset.refundRequestId,
+        refundButton
+      );
+      return;
+    }
     const cancellationButton = event.target.closest('[data-cancellation-action][data-cancellation-id]');
     if (cancellationButton) { decideCancellation(cancellationButton.dataset.cancellationId, cancellationButton.dataset.cancellationAction, cancellationButton); return; }
     const reviewButton = event.target.closest('[data-review-action][data-review-id]');
