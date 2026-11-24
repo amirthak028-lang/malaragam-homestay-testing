@@ -477,13 +477,19 @@ function checkDates(){
   return true;
 }
 
-function onDates(){
+async function onDates(){
   if(el.inD.value){
     el.outD.min = addDays(el.inD.value,1);
+
     if(!el.outD.value || el.outD.value <= el.inD.value){
       el.outD.value = addDays(el.inD.value,wantNights);
     }
   }
+
+  if(live){
+    await loadAvailability();
+  }
+
   checkDates();
   refresh();
 }
