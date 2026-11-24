@@ -464,23 +464,34 @@ function rangeIsFree(){
   return !booked.some(x => a < x.check_out && b > x.check_in);
 }
   function checkDates(){
+  el.avail.className = 'inline-msg';
+  el.avail.textContent = '';
 
-if(live){
-  if(!availabilityLoaded){
+  if(!el.inD.value || !el.outD.value) return true;
+
+  if(nightsCount()<1){
     el.avail.className = 'inline-msg err';
-    el.avail.textContent = 'Unable to check availability. Please try again.';
+    el.avail.textContent = t('badRange');
     return false;
   }
 
-  if(!rangeIsFree()){
-    el.avail.className = 'inline-msg err';
-    el.avail.textContent = t('booked');
-    return false;
+  if(live){
+    if(!availabilityLoaded){
+      el.avail.className = 'inline-msg err';
+      el.avail.textContent = 'Unable to check availability. Please try again.';
+      return false;
+    }
+
+    if(!rangeIsFree()){
+      el.avail.className = 'inline-msg err';
+      el.avail.textContent = t('booked');
+      return false;
+    }
+
+    el.avail.className = 'inline-msg ok';
+    el.avail.textContent = t('available');
   }
 
-  el.avail.className = 'inline-msg ok';
-  el.avail.textContent = t('available');
-}
   return true;
 }
 
