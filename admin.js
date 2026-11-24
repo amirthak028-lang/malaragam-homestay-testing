@@ -910,10 +910,10 @@ let currentAdminRole = null;
   <div class="cancellation-row-actions">
     <button type="button" class="secondary-button" data-cancellation-action="approved" data-cancellation-id="${escapeHtml(item.id)}">Approve</button>
     <button type="button" class="admin-delete-button" data-cancellation-action="rejected" data-cancellation-id="${escapeHtml(item.id)}">Reject</button>
-  </div>` : (item.status === 'approved' && eligible && item.refund_status !== 'refunded' && currentAdminRole === 'primary_admin') ? `
+  </div>` : ((item.status === 'approved' || item.status === 'refund_pending') && eligible && item.refund_status !== 'refunded' && currentAdminRole === 'primary_admin') ? `
   <div class="cancellation-row-actions">
-    <button type="button" class="secondary-button" data-refund-request-id="${escapeHtml(item.id)}">Process Refund</button>
-  </div>` : `<span class="muted">${escapeHtml(item.refund_status === 'refunded' ? 'Refund completed' : 'Decision recorded')}</span>`}</td>
+    <button type="button" class="secondary-button" data-refund-request-id="${escapeHtml(item.id)}">${item.status === 'refund_pending' ? 'Check Refund Status' : 'Process Refund'}</button>
+  </div>` : `<span class="muted">${escapeHtml(item.refund_status === 'refunded' ? 'Refund completed' : item.status === 'refund_pending' ? 'Refund pending' : 'Decision recorded')}</span>`}</td>
       </tr>`;
     }).join('');
 
@@ -953,7 +953,8 @@ let currentAdminRole = null;
     }
   }
 
-  async function processCancellationRefund(requestId, button) {
+ 
+async function processCancellationRefund(requestId, button) {
   const request = cancellationRows.find(item => item.id === requestId);
 
   if (!request) {
@@ -962,22 +963,29 @@ let currentAdminRole = null;
   }
 
   if (currentAdminRole !== 'primary_admin') {
-    setDashboardMessage('Only the Primary Admin can process refunds.', true);
+    setDashboardMessage('Only the Primary Admin can check or process refunds.', true);
     return;
   }
 
-  if (request.status !== 'approved' || request.eligible_for_refund !== true) {
+  const isReconciliation = request.status === 'refund_pending';
+
+  if (
+    (!isReconciliation && request.status !== 'approved') ||
+    request.eligible_for_refund !== true
+  ) {
     setDashboardMessage('This request is not approved and eligible for a refund.', true);
     return;
   }
 
-  if (!window.confirm(
-    `Process the eligible refund of ${formatCurrency(request.refund_amount)} for this cancellation?`
-  )) return;
+  const confirmationMessage = isReconciliation
+    ? 'Check the status of the existing refund? No new refund will be created.'
+    : `Process the eligible refund of ${formatCurrency(request.refund_amount)} for this cancellation?`;
+
+  if (!window.confirm(confirmationMessage)) return;
 
   const originalText = button.textContent;
   button.disabled = true;
-  button.textContent = 'Processing…';
+  button.textContent = isReconciliation ? 'Checking…' : 'Processing…';
 
   try {
     const result = await callAdminFunction('admin-process-refund', {
@@ -985,14 +993,18 @@ let currentAdminRole = null;
     });
 
     setDashboardMessage(
-      result.message || 'Refund request sent to the payment provider.'
+      result.message || (
+        isReconciliation
+          ? 'Refund status checked.'
+          : 'Refund request sent to the payment provider.'
+      )
     );
 
     await loadCancellationManagement();
 
   } catch (error) {
     setDashboardMessage(
-      error.message || 'Could not process the refund. Check its status before retrying.',
+      error.message || 'Could not check or process the refund. Verify its status before retrying.',
       true
     );
 
